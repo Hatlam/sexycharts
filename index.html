@@ -9,6 +9,8 @@
 	<script type="text/javascript">
 		Raphael.fn.chartDonut = function (x, y, r1, r2, values, colors) {
 			var paper = this;
+			var animationTime = 100;
+			var segmentWidth = r2 - r1; 
 
 			function sector(x, y, r1, r2, startAngle, endAngle, params) {
 				var x11 = x + r1 * Math.sin(startAngle);
@@ -45,16 +47,16 @@
 			var process = function(i) {
 				var endangle = angle + values[i] / total * Math.PI * 2;
 				var p = sector(x, y, r1, r2, angle, endangle, {"fill": colors[i], "stroke": colors[i], "stroke-width": 0});
-				var p_shadow = p.glow({opacity: 0.01, width: 20});
+				var p_shadow = p.glow({opacity: 0.001, width: segmentWidth * 0.6});
 
 				p.mouseover(function () {
 					p_shadow.toFront();
 					p.toFront();
-					p_shadow.stop().animate({"opacity": 0.02, width: 10}, 400);
-					p.stop().animate({"stroke-width": 10}, 400, "bounce");
+					p_shadow.stop().animate({"opacity": 0.02}, animationTime);
+					p.stop().animate({"stroke-width": segmentWidth * 0.33}, animationTime);
 				}).mouseout(function () {
-					p_shadow.stop().animate({"opacity": 0, width: 10}, 400);
-					p.stop().animate({"stroke-width": 0}, 400, "bounce");
+					p_shadow.stop().animate({"opacity": 0}, animationTime);
+					p.stop().animate({"stroke-width": 0}, animationTime);
 				});
 				angle = endangle;
 			}
@@ -65,7 +67,7 @@
 		}
 
 		$(function (){
-			Raphael("holder", 700, 700).chartDonut(200, 200, 100, 130, [1, 2, 4, 3, 2], ["pink", "AntiqueWhite", "BurlyWood", "DarkSalmon", "red"]);
+			Raphael("holder", 700, 700).chartDonut(200, 200, 100, 130, [5, 1, 5, 3], ["#ADD7B8", "#88FFC4", "#00E397", "#71C499"]);
 		});
 	</script>
 
