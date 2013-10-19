@@ -33,7 +33,15 @@
 				}
 
 			var p = paper.path().attr({sector: [300, 300, 100, 140, 0, 0], fill: "pink", stroke: "none"});
-			p.animate({sector: [300, 300, 100, 140, 0, Math.PI * 1.9999]}, 1000, "bounce");
+
+			p.animate({sector: [300, 300, 100, 140, 0, Math.PI * 1.9999]}, 1000, ">", function() {
+				p.mouseover( function(){
+					p.animate({sector: [300, 300, 90, 150, 0, Math.PI * 1.9999]}, 100);
+				}).mouseout(function () {
+					p.animate({sector: [300, 300, 100, 140, 0, Math.PI * 1.9999]}, 100);
+				});
+			});
+
 		};
 	</script>
 
