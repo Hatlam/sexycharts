@@ -1,0 +1,42 @@
+<html>
+<head>
+	<title></title>
+	<script src="raphael.js"></script>
+</head>
+<body>
+	<script>
+		window.onload = function () {
+			var paper = Raphael("holder");
+
+			paper.ca.sector = function (x, y, r1, r2, startAngle, endAngle) {
+					var x11 = x + r1 * Math.sin(startAngle);
+					var y11 = y - r1 * Math.cos(startAngle);
+					var x21 = x + r1 * Math.sin(endAngle);
+					var y21 = y - r1 * Math.cos(endAngle);
+
+					var x12 = x + r2 * Math.sin(startAngle);
+					var y12 = y - r2 * Math.cos(startAngle);
+					var x22 = x + r2 * Math.sin(endAngle);
+					var y22 = y - r2 * Math.cos(endAngle);
+
+					var big = 0;
+					if (endAngle - startAngle > Math.PI) 
+						big = 1;
+
+					var pathList = ["M", x12, y12,
+									"A", r2, r2, 0, big, 1, x22, y22,
+									"L", x21, y21, 
+									"A", r1, r1, 0, big, 0, x11, y11,
+									"Z"];
+
+					return {path: pathList};
+				}
+
+			var p = paper.path().attr({sector: [300, 300, 100, 140, 0, 0], fill: "pink", stroke: "none"});
+			p.animate({sector: [300, 300, 100, 140, 0, Math.PI * 1.9999]}, 1000, "bounce");
+		};
+	</script>
+
+	<div id="holder" style="width: 700px; height: 700px;"></div>
+</body>
+</html>

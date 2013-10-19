@@ -2,7 +2,6 @@
 <head>
 	<title></title>
 	<script src="raphael.js"></script>
-	<script src="jquery.js"></script>
 </head>
 <body style = "background-color: #fff;">
 
@@ -66,9 +65,9 @@
 			};
 		}
 
-		$(function (){
+		window.onload = function () {
 			Raphael("holder", 700, 700).chartDonut(200, 200, 100, 130, [5, 1, 5, 3], ["#ADD7B8", "#88FFC4", "#00E397", "#71C499"]);
-		});
+		};
 	</script>
 
 	<div id="holder"></div>
