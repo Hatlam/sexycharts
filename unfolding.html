@@ -7,6 +7,19 @@
 	<script>
 		window.onload = function () {
 			var paper = Raphael("holder");
+			var sectorSize = 1;
+			var paths = paper.set();
+			var data = [1, 2, 3, 4];
+			var startAngles = [];
+			var endAngles = [];
+			var colors = ["#ADD7B8", "#88FFC4", "#00E397", "#71C499"];
+			var total = 0;
+			for (var i = 0; i < data.length; i++) {
+				total += data[i];
+				startAngles.push(0);
+				endAngles.push(0);
+			};
+			var startAngle = 0;
 
 			paper.ca.sector = function (x, y, r1, r2, startAngle, endAngle) {
 					var x11 = x + r1 * Math.sin(startAngle);
@@ -32,16 +45,44 @@
 					return {path: pathList};
 				}
 
-			var p = paper.path().attr({sector: [300, 300, 100, 140, 0, 0], fill: "pink", stroke: "none"});
 
-			p.animate({sector: [300, 300, 100, 140, 0, Math.PI * 1.9999]}, 1000, ">", function() {
-				p.mouseover( function(){
-					p.animate({sector: [300, 300, 90, 150, 0, Math.PI * 1.9999]}, 100);
-				}).mouseout(function () {
-					p.animate({sector: [300, 300, 100, 140, 0, Math.PI * 1.9999]}, 100);
-				});
-			});
+			for (var i = 0; i < data.length; i++) {
+				var deltaAngle = data[i] / total * Math.PI * 2 * 0.0001;
+				paths.push(paper.path().attr( {sector : [200, 200, 100, 140, startAngle, startAngle + deltaAngle], fill: colors[i], stroke: colors[i], "stroke-width": 0}));
+				startAngle += deltaAngle;
+			};
 
+			function redrawWithAnimation(ms) {
+			 	var startAngle = 0;
+			 	var deltaAngle = 0;
+
+			 	for (var i = 0; i < data.length; i++) {
+					var deltaAngle = data[i] / total * Math.PI * 2;
+					var p = paths[i];
+					p.animate({sector : [200, 200, 100, 140, startAngle, startAngle + deltaAngle]}, ms, "bounce", function() {
+
+					});
+					startAngles[i] = startAngle;
+					startAngle += deltaAngle;
+					endAngles[i] = startAngle;
+				};
+			}
+
+
+			function setAnimation(ms) {
+				for (var i = 0; i < paths.length; i++) {
+					var p = paths[i];
+					p.mouseover(function (i) {
+						this.toFront();
+						this.animate({"stroke-width": 30 * 0.33}, 100);
+					}).mouseout(function () {
+						this.animate({"stroke-width": 0}, 100);
+					});
+				};
+			}
+
+			redrawWithAnimation(1000);
+			setAnimation(100);
 		};
 	</script>
 
