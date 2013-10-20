@@ -53,6 +53,7 @@
 				startAngle += deltaAngle;
 			};
 
+			var shadows = paper.set();
 			function redrawWithAnimation(ms) {
 			 	var startAngle = 0;
 			 	var deltaAngle = 0;
@@ -61,7 +62,7 @@
 					var deltaAngle = data[i] / total * Math.PI * 2;
 					var p = paths[i];
 					p.animate({sector : [160, 160, 100, 140, startAngle, startAngle + deltaAngle]}, ms, "bounce", function() {
-
+						setAnimation(100);		
 					});
 					startAngles[i] = startAngle;
 					startAngle += deltaAngle;
@@ -69,15 +70,18 @@
 				};
 			}
 
-
 			function setAnimation(ms) {
 				for (var i = 0; i < paths.length; i++) {
 					var p = paths[i];
-					p.mouseover(function (i) {
+					shadows.push(paths[i].glow({opacity: 0.0001, width: 30 * 0.6}));
+					paths[i].data = i;
+					p.mouseover(function () {
 						this.toFront();
-						this.animate({"stroke-width": 30 * 0.33}, 100);
+						this.stop().animate({"stroke-width": 30 * 0.33}, ms);
+						shadows[this.data].stop().animate({opacity: 0.02}, ms);
 					}).mouseout(function () {
-						this.animate({"stroke-width": 0}, 100);
+						this.stop().animate({"stroke-width": 0}, 100);
+						shadows[this.data].stop().animate({opacity: 0.0001}, ms);
 					});
 				};
 			}
@@ -93,8 +97,7 @@
 			var animationAllowed = true;
 			$(document).scroll( function(){
 				if (isScrolledIntoView("#holder") && animationAllowed) {
-					redrawWithAnimation(1000);
-					setAnimation(1000);						
+					redrawWithAnimation(1500);
 					animationAllowed = false;
 				}
 			});
