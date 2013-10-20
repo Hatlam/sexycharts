@@ -10,7 +10,7 @@
 			var paper = Raphael("holder");
 			var sectorSize = 1;
 			var paths = paper.set();
-			var data = [1, 2, 3, 4];
+			var data = [5, 1, 5, 3];
 			var startAngles = [];
 			var endAngles = [];
 			var colors = ["#ADD7B8", "#88FFC4", "#00E397", "#71C499"];
@@ -49,7 +49,7 @@
 
 			for (var i = 0; i < data.length; i++) {
 				var deltaAngle = data[i] / total * Math.PI * 2 * 0.0001;
-				paths.push(paper.path().attr( {sector : [160, 160, 100, 140, startAngle, startAngle + deltaAngle], fill: colors[i], stroke: colors[i], "stroke-width": 0}));
+				paths.push(paper.path().attr( {sector : [160, 160, 100, 130, startAngle, startAngle + deltaAngle], fill: colors[i], stroke: colors[i], "stroke-width": 0}));
 				startAngle += deltaAngle;
 			};
 
@@ -61,7 +61,7 @@
 			 	for (var i = 0; i < data.length; i++) {
 					var deltaAngle = data[i] / total * Math.PI * 2;
 					var p = paths[i];
-					p.animate({sector : [160, 160, 100, 140, startAngle, startAngle + deltaAngle]}, ms, "bounce", function() {
+					p.animate({sector : [160, 160, 100, 130, startAngle, startAngle + deltaAngle]}, ms, "bounce", function() {
 						setAnimation(100);		
 					});
 					startAngles[i] = startAngle;
