@@ -3,10 +3,8 @@ function donutChart(x, y, r1, r2, data, colors, placeholder) {
 	var paper = Raphael(placeholder);
 	var sectorSize = 1;
 	var paths = paper.set();
-	//var data = [5, 1, 5, 3];
 	var startAngles = [];
 	var endAngles = [];
-	//var colors = ["#ADD7B8", "#88FFC4", "#00E397", "#71C499"];
 	var total = 0;
 	for (var i = 0; i < data.length; i++) {
 		total += data[i];
@@ -75,11 +73,11 @@ function donutChart(x, y, r1, r2, data, colors, placeholder) {
 				shadows[this.data].toFront();
 				this.toFront();
 			}).mouseout(function () {
-				this.stop().animate({"stroke-width": 0}, 100);
+				this.stop().animate({"stroke-width": 0}, ms);
 				shadows[this.data].stop().animate({opacity: 0.0001}, ms);
-				this.toBack();
 				shadows[this.data].toBack();
 				puttAllSectorsToFront();
+				this.toFront();
 			});
 		};
 	}
