@@ -1,11 +1,13 @@
-function donutChart(x, y, r1, r2, data, colors, placeholder) {
+Raphael.fn.donutChart = function (x, y, r1, r2, data, colors) {
 
-	var paper = Raphael(placeholder);
+	var paper = this;
 	var sectorSize = 1;
 	var paths = paper.set();
 	var startAngles = [];
 	var endAngles = [];
 	var total = 0;
+	var placeholder = this.canvas.parentNode.id;
+	
 	for (var i = 0; i < data.length; i++) {
 		total += data[i];
 		startAngles.push(0);
@@ -93,16 +95,11 @@ function donutChart(x, y, r1, r2, data, colors, placeholder) {
 	    var windowBottom = $(window).scrollTop() + window.innerHeight;
 	    var windowTop = $(window).scrollTop();
 	    var elemCenter = $(elem).offset().top + $(elem).height() / 2;
-	    console.log(placeholder);
-	    console.log(windowBottom);
-	    console.log(windowTop);
-	    console.log(elemCenter);
 	    return elemCenter < windowBottom && elemCenter > windowTop;
 	}
 
 	var animationAllowed = true;
 	if (isScrolledIntoView("#" + placeholder) && animationAllowed) {
-		console.log("hm ;(");
 		redrawWithAnimation(1500);
 		animationAllowed = false;
 		puttAllSectorsToFront();

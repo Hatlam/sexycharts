@@ -9,10 +9,9 @@
 	<script>
 
 		window.onload = function () {
-
-			donutChart(160,160,100,130,[5, 1, 5, 3],["#ADD7B8", "#88FFC4", "#00E397", "#71C499"],"holder1");
-			donutChart(160,160, 80,110,[22, 1, 30, 2, 4, 12],["#87FEC3", "#0DDE91", "#A5FB8E", "#42F085", "#69C198", "#ADD7B8"],"holder2");
-			donutChart(180,180, 120,160,[4, 1, 20, 5, 2, 60, 3, 2, 70],["#FFA34D", "#FFBC56", "#FFD657","#FFE182","#FEFCB8", "#FFF486", "#FFD363", "#E1B26D", "#F76757"],"holder3");
+			Raphael("holder1").donutChart(160,160,100,130,[5, 1, 5, 3],["#ADD7B8", "#88FFC4", "#00E397", "#71C499"]);
+			Raphael("holder2").donutChart(160,160, 80,110,[22, 1, 30, 2, 4, 12],["#87FEC3", "#0DDE91", "#A5FB8E", "#42F085", "#69C198", "#ADD7B8"]);
+			Raphael("holder3").donutChart(180,180, 120,160,[4, 1, 20, 5, 2, 60, 3, 2, 70],["#FFA34D", "#FFBC56", "#FFD657","#FFE182","#FEFCB8", "#FFF486", "#FFD363", "#E1B26D", "#F76757"]);
 
 		}
 	</script>
