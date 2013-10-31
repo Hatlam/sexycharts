@@ -7,33 +7,6 @@
     <script src="sexychart.js"></script>
   </head>
   <body>
-    <p>Scroll me!</p>
-    <p>Scroll me!</p>
-    <p>Scroll me!</p>
-    <p>Scroll me!</p>
-    <p>Scroll me!</p>
-    <p>Scroll me!</p>
-    <p>Scroll me!</p>
-    <p>Scroll me!</p>
-    <p>Scroll me!</p>
-    <p>Scroll me!</p>
-    <p>Scroll me!</p>
-    <p>Scroll me!</p>
-    <p>Scroll me!</p>
-    <p>Scroll me!</p>
-    <p>Scroll me!</p>
-    <p>Scroll me!</p>
-    <p>Scroll me!</p>
-    <p>Scroll me!</p>
-    <p>Scroll me!</p>
-    <p>Scroll me!</p>
-    <p>Scroll me!</p>
-    <p>Scroll me!</p>
-    <p>Scroll me!</p>
-    <p>Scroll me!</p>
-    <p>Scroll me!</p>
-    <p>Scroll me!</p>
-    <p>Scroll me!</p>
     <div id="chartdiv" style="width: 300px; height: 300px;"></div>
     <div id="table" style="width: 600px; height: 200px;"></div>
     <div id="table1" style="width: 300px; height: 200px;"></div>
@@ -49,19 +22,19 @@
         data.addColumn('number', 'Value');
         data.addColumn('string', 'Color')
 
-        data.addRows(1);
+        data.addRows(4);
         data.setCell(0, 0, 'налоги на прибыль, доходы');
-        // data.setCell(1, 0, 'налоги на совокупный доход');
-        // data.setCell(2, 0, 'налоги на имущество');
-        // data.setCell(3, 0, 'государственная пошлина');
+        data.setCell(1, 0, 'налоги на совокупный доход');
+        data.setCell(2, 0, 'налоги на имущество');
+        data.setCell(3, 0, 'государственная пошлина');
         data.setCell(0, 1, 51.1);
-        // data.setCell(1, 1, 12.3);
-        // data.setCell(2, 1, 53.6);
-        // data.setCell(3, 1, 29.9);
+        data.setCell(1, 1, 12.3);
+        data.setCell(2, 1, 53.6);
+        data.setCell(3, 1, 29.9);
         data.setCell(0, 2, '#ADD7B8');
-        // data.setCell(1, 2, '#88FFC4');
-        // data.setCell(2, 2, '#00E397');
-        // data.setCell(3, 2, '#71C499');
+        data.setCell(1, 2, '#88FFC4');
+        data.setCell(2, 2, '#00E397');
+        data.setCell(3, 2, '#71C499');
 
         var options = {meassure: "млн. р.", textColor: '#ADD7B8'};
         chart = new sexychart.PieChart(document.getElementById('chartdiv'));
