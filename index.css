@@ -1,0 +1,49 @@
+body {
+	font-family: "Verdana", Verdana, sans-serif;
+	font-size: 12px;
+}
+
+ul {
+	float: left;
+}
+
+ul.legend-0 {
+
+}
+
+ul.legend-0 li {
+	display: block; 
+	border-radius: 5px;
+	width: 300px;
+	list-style: none;
+	vertical-align: middle;
+}
+
+ul.legend-0 li div {
+	display: inline-block;
+	margin-top: 15px;
+	margin-left: 10px;
+	vertical-align: top;
+	width: 25px;
+	height: 10px;
+	border-radius: 10px;
+}
+
+ul.legend-0 li p {
+	display: inline-block;
+	margin-left: 20px;
+	vertical-align: top;
+	width: 60%;
+	height: auto;
+}
+
+ul.legend-0 li span {
+	display: inline-block;
+	margin-top: 12px;
+	vertical-align: top;
+	width: 20%;
+	text-align: center;
+}
+.legend-item-hover {
+	background-color: #eee;
+}
