@@ -44,6 +44,7 @@ sexychart.PieChart = function (container) {
     this.width = 0;
     this.height = 0;
     this.min = 0;
+    this.textColor = "#000";
 }
 
 // PieChart.draw() method 
@@ -121,18 +122,23 @@ sexychart.PieChart.prototype.draw = function (data, options) {
 
         }
 
+        if (options && "textColor" in options) {
+            self.textColor = options.textColor;
+        }
+
         self.txt = this.text(x, y - self.min * sexychart.DIV_TO_TXT / 6, self.formatValue(total)).attr(
                                                 {'font-size': self.min * sexychart.DIV_TO_TXT, 
                                                 'font-family':'Verdana, Verdana, sans-serif',
-                                                'fill': colors[0]});
+                                                'fill': self.textColor});
 
         if (options && "meassure" in options) {
             self.meassure = this.text(x, y + self.min * sexychart.DIV_TO_TXT * .9, options.meassure)
                                 .attr({'font-size': self.min * sexychart.DIV_TO_TXTM, 
                                         'font-family':'Helvetica, Helvetica, sans-serif',
-                                        'fill': colors[0]});
+                                        'fill': self.textColor});
         }
-            
+        
+
 
         var values = data;
         function setAnimation(ms) {
