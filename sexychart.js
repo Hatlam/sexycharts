@@ -393,7 +393,6 @@ sexychart.Legend.prototype.setHover = function (coords) {
         for (var c = 0; c < coords.length; c++) {
             var rowInd = coords[c].row;
             var colInd = coords[c].col;
-            console.log(colInd + " " + rowInd);
             if (rowInd != null && bar.index == rowInd) {
                 className += '-hover';
                 break;

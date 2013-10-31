@@ -2,7 +2,6 @@
   <head>
     <link rel="stylesheet" type="text/css" href="http://visapi-gadgets.googlecode.com/svn/trunk/barsofstuff/bos.css"/>
     <link rel="stylesheet" type="text/css" href="index.css"/>
-    <script type="text/javascript" src="bos.js"></script>
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
     <script src="jquery.js"></script>
     <script src="raphael.js"></script>
@@ -56,14 +55,14 @@
         data.setCell(1, 0, 'налоги на совокупный доход');
         data.setCell(2, 0, 'налоги на имущество');
         data.setCell(3, 0, 'государственная пошлина');
-        data.setCell(0, 1, 51.1, '51\nмлн.р.');
-        data.setCell(1, 1, 12.3, '12\nмлн.р.');
-        data.setCell(2, 1, 53.6, '53\nмлн.р.');
-        data.setCell(3, 1, 29.9, '29\nмлн.р.');
-        data.setCell(0, 2, '#ADD7B8', '#ADD7B8');
-        data.setCell(1, 2, '#88FFC4', '#88FFC4');
-        data.setCell(2, 2, '#00E397', '#00E397');
-        data.setCell(3, 2, '#71C499', '#71C499');
+        data.setCell(0, 1, 51.1);
+        data.setCell(1, 1, 12.3);
+        data.setCell(2, 1, 53.6);
+        data.setCell(3, 1, 29.9);
+        data.setCell(0, 2, '#ADD7B8');
+        data.setCell(1, 2, '#88FFC4');
+        data.setCell(2, 2, '#00E397');
+        data.setCell(3, 2, '#71C499');
 
         var options = {meassure: "млн. р."}
         chart = new sexychart.PieChart(document.getElementById('chartdiv'));
