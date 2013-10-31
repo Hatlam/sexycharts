@@ -1,75 +1,87 @@
 <html>
-<head>
-	<title></title>
-	<script src="raphael.js"></script>
-</head>
-<body style = "background-color: #fff;">
+  <head>
+    <link rel="stylesheet" type="text/css" href="http://visapi-gadgets.googlecode.com/svn/trunk/barsofstuff/bos.css"/>
+    <link rel="stylesheet" type="text/css" href="index.css"/>
+    <script type="text/javascript" src="bos.js"></script>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script src="jquery.js"></script>
+    <script src="raphael.js"></script>
+    <script src="sexychart.js"></script>
+  </head>
+  <body>
+    <p>Scroll me!</p>
+    <p>Scroll me!</p>
+    <p>Scroll me!</p>
+    <p>Scroll me!</p>
+    <p>Scroll me!</p>
+    <p>Scroll me!</p>
+    <p>Scroll me!</p>
+    <p>Scroll me!</p>
+    <p>Scroll me!</p>
+    <p>Scroll me!</p>
+    <p>Scroll me!</p>
+    <p>Scroll me!</p>
+    <p>Scroll me!</p>
+    <p>Scroll me!</p>
+    <p>Scroll me!</p>
+    <p>Scroll me!</p>
+    <p>Scroll me!</p>
+    <p>Scroll me!</p>
+    <p>Scroll me!</p>
+    <p>Scroll me!</p>
+    <p>Scroll me!</p>
+    <p>Scroll me!</p>
+    <p>Scroll me!</p>
+    <p>Scroll me!</p>
+    <p>Scroll me!</p>
+    <p>Scroll me!</p>
+    <p>Scroll me!</p>
+    <div id="chartdiv" style="width: 300px; height: 300px;"></div>
+    <div id="table" style="width: 600px; height: 200px;"></div>
+    <div id="table1" style="width: 300px; height: 200px;"></div>
 
-	<script type="text/javascript">
-		Raphael.fn.chartDonut = function (x, y, r1, r2, values, colors) {
-			var paper = this;
-			var animationTime = 100;
-			var segmentWidth = r2 - r1; 
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages: ['table']});
+      google.setOnLoadCallback(drawChart);
+      var chart;
+      function drawChart() {
+        var data = new google.visualization.DataTable();
 
-			function sector(x, y, r1, r2, startAngle, endAngle, params) {
-				var x11 = x + r1 * Math.sin(startAngle);
-				var y11 = y - r1 * Math.cos(startAngle);
-				var x21 = x + r1 * Math.sin(endAngle);
-				var y21 = y - r1 * Math.cos(endAngle);
+        data.addColumn('string', 'Label');
+        data.addColumn('number', 'Value');
+        data.addColumn('string', 'Color')
 
-				var x12 = x + r2 * Math.sin(startAngle);
-				var y12 = y - r2 * Math.cos(startAngle);
-				var x22 = x + r2 * Math.sin(endAngle);
-				var y22 = y - r2 * Math.cos(endAngle);
+        data.addRows(4);
+        data.setCell(0, 0, 'налоги на прибыль, доходы');
+        data.setCell(1, 0, 'налоги на совокупный доход');
+        data.setCell(2, 0, 'налоги на имущество');
+        data.setCell(3, 0, 'государственная пошлина');
+        data.setCell(0, 1, 51.1, '51\nмлн.р.');
+        data.setCell(1, 1, 12.3, '12\nмлн.р.');
+        data.setCell(2, 1, 53.6, '53\nмлн.р.');
+        data.setCell(3, 1, 29.9, '29\nмлн.р.');
+        data.setCell(0, 2, '#ADD7B8', '#ADD7B8');
+        data.setCell(1, 2, '#88FFC4', '#88FFC4');
+        data.setCell(2, 2, '#00E397', '#00E397');
+        data.setCell(3, 2, '#71C499', '#71C499');
 
-				var big = 0;
-				if (endAngle - startAngle > Math.PI) 
-					big = 1;
+        var options = {meassure: "млн. р."}
+        chart = new sexychart.PieChart(document.getElementById('chartdiv'));
+        chart.draw(data, options);
 
-				var pathList = ["M", x12, y12,
-								"A", r2, r2, 0, big, 1, x22, y22,
-								"L", x21, y21, 
-								"A", r1, r1, 0, big, 0, x11, y11,
-								"Z"];
+        var legend = new sexychart.Legend(document.getElementById('table'));
+        legend.draw(data, null);
 
-				var c = paper.path(pathList).attr(params);
-				return c;
-			}
+        // When the chart is selected, update the legend.
+        google.visualization.events.addListener(chart, 'hover', function() {
+          legend.setHover(chart.getHover());
+        });
 
-			var total = 0;
-			for (var i = 0; i < values.length; i++) {
-				total += values[i];
-			};
-
-			var angle = 0;
-
-			var process = function(i) {
-				var endangle = angle + values[i] / total * Math.PI * 2;
-				var p = sector(x, y, r1, r2, angle, endangle, {"fill": colors[i], "stroke": colors[i], "stroke-width": 0});
-				var p_shadow = p.glow({opacity: 0.001, width: segmentWidth * 0.6});
-
-				p.mouseover(function () {
-					p_shadow.toFront();
-					p.toFront();
-					p_shadow.stop().animate({"opacity": 0.02}, animationTime);
-					p.stop().animate({"stroke-width": segmentWidth * 0.33}, animationTime);
-				}).mouseout(function () {
-					p_shadow.stop().animate({"opacity": 0}, animationTime);
-					p.stop().animate({"stroke-width": 0}, animationTime);
-				});
-				angle = endangle;
-			}
-
-			for (var i = 0; i < values.length; i++) {
-				process(i);
-			};
-		}
-
-		window.onload = function () {
-			Raphael("holder", 700, 700).chartDonut(200, 200, 100, 130, [5, 1, 5, 3], ["#ADD7B8", "#88FFC4", "#00E397", "#71C499"]);
-		};
-	</script>
-
-	<div id="holder"></div>
-</body>
+        // When the legend is selected, update the chart visualization.
+        google.visualization.events.addListener(legend, 'hover', function() {
+          chart.setHover(legend.getHover());
+        });
+      }
+    </script>
+  </body>
 </html>
