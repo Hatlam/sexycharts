@@ -95,7 +95,7 @@ sexychart.PieChart.prototype.draw = function (data, options) {
 
 
         for (var i = 0; i < data.length; i++) {
-            var deltaAngle = data[i] / total * Math.PI * 2 * 0.0001;
+            var deltaAngle = data[i] / total * Math.PI * 2 * 0.000001;
             self.paths.push(paper.path().attr( {sector : [x, y, r1, r2, startAngle, startAngle + deltaAngle], fill: colors[i], stroke: colors[i], "stroke-width": 0}));
             startAngle += deltaAngle;
         };
@@ -106,7 +106,7 @@ sexychart.PieChart.prototype.draw = function (data, options) {
             var deltaAngle = 0;
 
             for (var i = 0; i < data.length; i++) {
-                var deltaAngle = data[i] / total * Math.PI * 2;
+                var deltaAngle = data[i] / (total * 1.00001) * Math.PI * 2;
                 var p = self.paths[i];
                 p.value = data[i];
                 p.formatedValue = data[i];
