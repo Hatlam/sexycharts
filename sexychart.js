@@ -307,7 +307,7 @@ sexychart.PieChart.prototype.puttAllSectorsToFront = function () {
 
 sexychart.PieChart.prototype.formatValue = function (number) {
     n = Math.round(number * 10) / 10;
-    return n.toString().replace('.', ',');
+    return n.toLocaleString();
 }
 
 /***********************************************
@@ -381,7 +381,7 @@ sexychart.Legend.prototype.draw = function (data, options) {
             html.push('<div style="background-color:'+ bars[i].color +';"></div>');
             html.push('<p>' + bars[i].label + '</p>');
             html.push('<span style="color:'+ bars[i].color +';">'
-                        + Math.round((bars[i].value / totalValue) * 100)
+                        + (Math.round((bars[i].value / totalValue) * 1000) / 10).toLocaleString()
                         + '% </span>');
             html.push('</li>');
         }
