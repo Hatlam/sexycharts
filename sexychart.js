@@ -47,6 +47,30 @@ sexychart.PieChart = function (container) {
     this.textColor = "#000";
 }
 
+function sectorPath(x, y, r1, r2, startAngle, endAngle) {
+    var x11 = x + r1 * Math.sin(startAngle);
+    var y11 = y - r1 * Math.cos(startAngle);
+    var x21 = x + r1 * Math.sin(endAngle);
+    var y21 = y - r1 * Math.cos(endAngle);
+
+    var x12 = x + r2 * Math.sin(startAngle);
+    var y12 = y - r2 * Math.cos(startAngle);
+    var x22 = x + r2 * Math.sin(endAngle);
+    var y22 = y - r2 * Math.cos(endAngle);
+
+    var big = 0;
+    if (endAngle - startAngle > Math.PI) 
+        big = 1;
+
+    var pathList = ["M", x12, y12,
+                    "A", r2, r2, 0, big, 1, x22, y22,
+                    "L", x21, y21, 
+                    "A", r1, r1, 0, big, 0, x11, y11,
+                    "Z"];
+
+    return pathList;
+}
+
 // PieChart.draw() method 
 sexychart.PieChart.prototype.draw = function (data, options) {
 
@@ -68,40 +92,24 @@ sexychart.PieChart.prototype.draw = function (data, options) {
             startAngles.push(0);
             endAngles.push(0);
         };
+        
         var startAngle = 0;
         total = self.totalValue;
+
         paper.ca.sector = function (x, y, r1, r2, startAngle, endAngle) {
-                var x11 = x + r1 * Math.sin(startAngle);
-                var y11 = y - r1 * Math.cos(startAngle);
-                var x21 = x + r1 * Math.sin(endAngle);
-                var y21 = y - r1 * Math.cos(endAngle);
-
-                var x12 = x + r2 * Math.sin(startAngle);
-                var y12 = y - r2 * Math.cos(startAngle);
-                var x22 = x + r2 * Math.sin(endAngle);
-                var y22 = y - r2 * Math.cos(endAngle);
-
-                var big = 0;
-                if (endAngle - startAngle > Math.PI) 
-                    big = 1;
-
-                var pathList = ["M", x12, y12,
-                                "A", r2, r2, 0, big, 1, x22, y22,
-                                "L", x21, y21, 
-                                "A", r1, r1, 0, big, 0, x11, y11,
-                                "Z"];
-
-                return {path: pathList};
-            }
-
+            var pathList = sectorPath(x, y, r1, r2, startAngle, endAngle);
+            return {path: pathList};
+        }
 
         for (var i = 0; i < data.length; i++) {
             var deltaAngle = data[i] / total * Math.PI * 2 * 0.000001;
-            self.paths.push(paper.path().attr( {sector : [x, y, r1, r2, startAngle, startAngle + deltaAngle], fill: colors[i], stroke: colors[i], "stroke-width": 0}));
+            self.paths.push(paper.path().attr( 
+                        {sector : [x, y, r1, r2, startAngle, startAngle + deltaAngle], 
+                        fill: colors[i], stroke: colors[i], 
+                        "stroke-width": 0}));
             startAngle += deltaAngle;
         };
 
-        var shadows = paper.set();
         function redrawWithAnimation(ms) {
             var startAngle = 0;
             var deltaAngle = 0;
@@ -111,6 +119,9 @@ sexychart.PieChart.prototype.draw = function (data, options) {
                 var p = self.paths[i];
                 p.value = data[i];
                 p.formatedValue = data[i];
+                var shadow = paper.path(sectorPath(x, y, r1 - 5, r2 + 5, startAngle - 0.04, startAngle + deltaAngle + 0.04));
+                shadow.hide();
+                p.shadow = shadow.glow({width: 5, color: 'balck', opacity: 0.001});
                 p.animate({sector : [x, y, r1, r2, startAngle, startAngle + deltaAngle]}, ms, "bounce", function() {
                     setAnimation(100);
                     self.hasBeenAnimated = true;      
@@ -126,15 +137,15 @@ sexychart.PieChart.prototype.draw = function (data, options) {
             self.textColor = options.textColor;
         }
 
-        self.txt = this.text(x, y - self.min * sexychart.DIV_TO_TXT / 6, self.formatValue(total)).attr(
+        self.txt = paper.text(x, y - self.min * sexychart.DIV_TO_TXT / 6, self.formatValue(total)).attr(
                                                 {'font-size': self.min * sexychart.DIV_TO_TXT, 
                                                 'font-family':'Verdana, Verdana, sans-serif',
                                                 'fill': self.textColor});
 
         if (options && "meassure" in options) {
-            self.meassure = this.text(x, y + self.min * sexychart.DIV_TO_TXT * .9, options.meassure)
+            self.meassure = paper.text(x, y + self.min * sexychart.DIV_TO_TXT * .9, options.meassure)
                                 .attr({'font-size': self.min * sexychart.DIV_TO_TXTM, 
-                                        'font-family':'Helvetica, Helvetica, sans-serif',
+                                        'font-family':'Verdana, Verdana, sans-serif',
                                         'fill': self.textColor});
         }
         
@@ -145,7 +156,6 @@ sexychart.PieChart.prototype.draw = function (data, options) {
             for (var i = 0; i < self.paths.length; i++) {
                 var p = self.paths[i];
                 p.index = i;
-                p.shadow = p.glow({opacity: 0.0001, width: self.min * sexychart.DIV_TO_SHADOW});
                 p.isSelected = false;
                 p.mouseover(function () {
                     self.setHover([{row: this.index}]);
@@ -257,7 +267,7 @@ sexychart.PieChart.prototype.setHover = function (coords) {
         else if (i != r && this.paths[i].isSelected) {
             curPath.isSelected = false;
             curPath.stop().animate({"stroke-width": 0}, 100);
-            curPath.shadow.stop().animate({opacity: 0.0001}, 100);
+            curPath.shadow.stop().animate({opacity: 0.001}, 100);
             curPath.shadow.toBack();
             this.puttAllSectorsToFront();
             curPath.toFront();
