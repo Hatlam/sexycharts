@@ -121,7 +121,7 @@ sexychart.PieChart.prototype.draw = function (data, options) {
                 var dStroke = (r2 - r1) * 0.22;
                 var shadow = paper.path(sectorPath(x, y, r1 - dStroke, r2 + dStroke, startAngle - 0.04, startAngle + deltaAngle + 0.04));
                 shadow.hide();
-                p.shadow = shadow.glow({width: 5, color: 'black', opacity: 0.001});
+                p.shadow = shadow.glow({width: (r2 - r1) / 6, color: 'black', opacity: 0.001});
                 startAngles[i] = startAngle;
                 startAngle += deltaAngle;
                 endAngles[i] = startAngle;
