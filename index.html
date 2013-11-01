@@ -36,7 +36,10 @@
         data.setCell(2, 2, '#00E397');
         data.setCell(3, 2, '#71C499');
 
-        var options = {meassure: "млн. р.", textColor: '#ADD7B8'};
+        var options = {meassure: "млн. р.", textAttr: {'font-size': 40, 
+                                                'font-family':'Verdana, Verdana, sans-serif',
+                                                'fill': '#ADD7B8'}};
+                                                
         chart = new sexychart.PieChart(document.getElementById('chartdiv'));
         chart.draw(data, options);
 

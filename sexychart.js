@@ -112,7 +112,7 @@ sexychart.PieChart.prototype.draw = function (data, options) {
 
         function redrawWithAnimation(ms) {
 
-            // First deal with shadows 
+            // Adding shadows 
             var startAngle = 0;
             var deltaAngle = 0;
             for (var i = 0; i < data.length; i++) {
@@ -127,7 +127,7 @@ sexychart.PieChart.prototype.draw = function (data, options) {
                 endAngles[i] = startAngle;
             };
 
-            // 
+            // Animating
             startAngle = 0;
             deltaAngle = 0;
             for (var i = 0; i < data.length; i++) {
@@ -150,16 +150,21 @@ sexychart.PieChart.prototype.draw = function (data, options) {
             self.textColor = options.textColor;
         }
 
-        self.txt = paper.text(x, y - self.min * sexychart.DIV_TO_TXT / 6, self.formatValue(total)).attr(
-                                                {'font-size': self.min * sexychart.DIV_TO_TXT, 
+        textAttributes = {'font-size': self.min * sexychart.DIV_TO_TXT, 
                                                 'font-family':'Verdana, Verdana, sans-serif',
-                                                'fill': self.textColor});
+                                                'fill': self.textColor};
+
+        if (options && "textAttr" in options) {
+            textAttributes = options.textAttr;
+        }
+
+        self.txt = paper.text(x, y - self.min * sexychart.DIV_TO_TXT / 6, 
+                                self.formatValue(total)).attr(textAttributes);
 
         if (options && "meassure" in options) {
+            textAttributes["font-size"] /= 2;
             self.meassure = paper.text(x, y + self.min * sexychart.DIV_TO_TXT * .9, options.meassure)
-                                .attr({'font-size': self.min * sexychart.DIV_TO_TXTM, 
-                                        'font-family':'Verdana, Verdana, sans-serif',
-                                        'fill': self.textColor});
+                                .attr(textAttributes);
         }
         
 
