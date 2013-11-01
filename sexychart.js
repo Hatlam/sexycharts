@@ -1,5 +1,23 @@
 /*
-    SexyChart.js visualistaions 
+    SexyChart.js library
+*/
+
+var sexychart = {};
+
+/************************************************************
+    Common fucntions
+*************************************************************/
+
+function isScrolledIntoView(elem)
+{
+    var windowBottom = $(window).scrollTop() + window.innerHeight;
+    var windowTop = $(window).scrollTop();
+    var elemCenter = elem.offset().top + elem.height() / 2;
+    return elemCenter < windowBottom && elemCenter > windowTop;
+}
+
+/************************************************************
+    PieChart visualisation
 
     Data format 
         First column string (label)
@@ -10,15 +28,9 @@
         getHover
         setHover
 
-    Event 
+    Events 
         hover
-*/
-
-var sexychart = {};
-
-/***********************************************
-    Pie Chart visualisation
-************************************************/
+*************************************************************/
 
 // Global constant to prevent collisions of different legends
 sexychart.nextPieChartId = 0;
@@ -195,23 +207,15 @@ sexychart.PieChart.prototype.draw = function (data, options) {
             };
         }
 
-        function isScrolledIntoView(elem)
-        {
-            var windowBottom = $(window).scrollTop() + window.innerHeight;
-            var windowTop = $(window).scrollTop();
-            var elemCenter = $(elem).offset().top + $(elem).height() / 2;
-            return elemCenter < windowBottom && elemCenter > windowTop;
-        }
-
         var animationAllowed = true;
-        if (isScrolledIntoView("#" + placeholder) && animationAllowed) {
+        if (isScrolledIntoView($("#" + placeholder)) && animationAllowed) {
             redrawWithAnimation(1500);
             animationAllowed = false;
             puttAllSectorsToFront();
         }
 
         $(document).scroll( function(){
-                if (isScrolledIntoView("#" + placeholder) && animationAllowed) {
+                if (isScrolledIntoView($("#" + placeholder)) && animationAllowed) {
                     redrawWithAnimation(1500);
                     animationAllowed = false;
                     puttAllSectorsToFront();
@@ -310,9 +314,21 @@ sexychart.PieChart.prototype.formatValue = function (number) {
     return n.toLocaleString();
 }
 
-/***********************************************
-    Legend table visualisation
-************************************************/
+/************************************************************
+    Legend visualisation
+
+    Data format 
+        First column string (label)
+        Second column number (value)
+        Third column string (color)
+
+    Methods 
+        getHover
+        setHover
+
+    Events
+        hover
+*************************************************************/
 
 // Global constant to prevent collisions of different legends
 sexychart.nextLegendId = 0;
@@ -444,4 +460,146 @@ sexychart.Legend.prototype.setHover = function (coords) {
         }
     }
 }
+
+/************************************************************
+    Planned and Made graph visualisation
+
+    Data format 
+        +----------------------------+----------------+
+        |   label_executed (string)  | value (number) |
+        +----------------------------+----------------+
+        |   label_planned (string)   | value (number) |
+        +----------------------------+----------------+
+    Methods 
+
+    Events 
+        
+*************************************************************/
+
+// Global constant to prevent collisions of different legends
+sexychart.nextPlannedAndExecutedId = 0;
+ 
+// Constructor 
+sexychart.PlannedAndExecuted = function (container) {
+    this.containerElement = container;
+    this.uid = sexychart.nextPlannedAndExecutedId++;
+    this.planned = null;
+    this.executed = null;
+}
+
+sexychart.PlannedAndExecuted.prototype.animateCounter = function(elem, from, to, prefix, postfix, afterComma, duration) {
+    afterComma = Math.pow(10, afterComma);
+    $({count:from}).animate({count:to}, {
+        duration: duration,
+        step: function() {
+            elem.text(prefix 
+                + (Math.round(this.count * afterComma) / afterComma).toLocaleString() 
+                + postfix);
+        },
+        complete: function () {
+            elem.text(prefix + to.toLocaleString() + postfix);
+        }
+    });
+}
+
+// Draw method 
+sexychart.PlannedAndExecuted.prototype.draw = function (data, options) {
+    // Set up html skeleton
+    var html = [];
+    var amountOfColumns = data.getNumberOfColumns();
+    var amountOfRows = data.getNumberOfRows();
+
+    if (amountOfColumns  >= 2 
+        && data.getColumnType(0) == 'string' 
+        && data.getColumnType(1) == 'number'
+        && amountOfRows >= 2)
+    {
+        this.executed = {label: data.getValue(0, 0), value: data.getValue(0, 1)};
+        this.planned = {label: data.getValue(1, 0), value: data.getValue(1, 1)};
+
+        var percents = Math.round(100 * this.executed.value / (this.planned.value + 0.0000001));
+
+        html.push('<div id="planned-executed-' + this.uid + '">');
+
+        var meassure = "";
+        if ('meassure' in options) {
+            meassure = '<span class="meassure">' + options.meassure +'</span>';
+        }
+
+        // Title
+        if ('title' in options) {
+            html.push('<h1>'+ options.title +'</h1>');
+        }
+
+
+        //Executed
+        html.push('<div id="executed-' + this.uid + '">' 
+                    + '<p>' + this.executed.label + '</p>' 
+                    + '<span>' + this.executed.value + '</span>'
+                    + meassure
+                + '</div>');
+
+        // Pointer
+        html.push('<div id="planned-executed-bubble-' + this.uid + '">' + percents + '%</div>');
+
+        // Bar 
+        html.push('<div id="planned-bar-' + this.uid + '"> </div>');
+
+        // Bar 
+        html.push('<div id="executed-bar-' + this.uid + '"> </div>');
+
+        // Planned
+        html.push('<div id="planned-' + this.uid + '">' 
+                    + '<p>' + this.planned.label + '</p>' 
+                    + '<span>' + this.planned.value + '</span>' 
+                    + meassure
+                + '</div>');
+
+        html.push('</div>');
+    }
+    else {
+        // FIX
+        console.log('Wrong table format!');
+    }
+
+    this.containerElement.innerHTML = html.join('');
+
+    // Animate
+    var pbar = $('#planned-bar-' + this.uid),
+        ebar = $('#executed-bar-'+ this.uid),
+        bubble = $('#planned-executed-bubble-'+ this.uid),
+        executedSpan = $('#executed-'+ this.uid + ' span').first(),
+        plannedWidth = pbar.width() * (percents / 100),
+        bubbleLeft = pbar.offset().left - bubble.width() / 2,
+        bubbleTop = pbar.offset().top - bubble.height();
+
+
+    var animationAllowed = true;
+
+    var self = this;
+    function animateBar() {
+        ebar.width(0);
+        ebar.animate({width: plannedWidth}, 1000);
+        ebar.offset(pbar.offset());
+        bubble.offset({left: bubbleLeft, top: bubbleTop});
+        bubble.animate({marginLeft: plannedWidth}, 1000);
+        self.animateCounter(bubble, 0, percents, '', '%', 0, 1000);
+        self.animateCounter(executedSpan, 0, self.executed.value, '', '', 1, 1000);    
+    }
+
+    if (isScrolledIntoView(pbar) && animationAllowed) {
+        animationAllowed = false;
+        animateBar();    
+    } 
+
+    
+    $(document).scroll( function(){
+        if (isScrolledIntoView(pbar) && animationAllowed) {
+            animationAllowed = false;
+            animateBar();        
+        }
+    });
+}
+
+
 
