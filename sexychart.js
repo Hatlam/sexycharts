@@ -478,6 +478,7 @@ sexychart.PlannedAndExecuted = function (container) {
 sexychart.PlannedAndExecuted.prototype.animateCounter = function(elem, from, to, prefix, postfix, afterComma, duration) {
     afterComma = Math.pow(10, afterComma);
     $({count:from}).animate({count:to}, {
+        easing: 'easeOutQuad',
         duration: duration,
         step: function() {
             elem.text(prefix 
@@ -567,10 +568,10 @@ sexychart.PlannedAndExecuted.prototype.draw = function (data, options) {
     var self = this;
     function animateBar() {
         ebar.width(0);
-        ebar.animate({width: plannedWidth}, 1000);
+        ebar.animate({width: plannedWidth}, 1000, 'easeOutQuad');
         ebar.offset(pbar.offset());
         bubble.offset({left: bubbleLeft, top: bubbleTop});
-        bubble.animate({marginLeft: plannedWidth}, 1000);
+        bubble.animate({marginLeft: plannedWidth}, 1000, 'easeOutQuad');
         self.animateCounter(bubble, 0, percents, '', '%', 0, 1000);
         self.animateCounter(executedSpan, 0, self.executed.value, '', '', 1, 1000);    
     }
@@ -591,7 +592,7 @@ sexychart.PlannedAndExecuted.prototype.draw = function (data, options) {
 
 
 /************************************************************
-    Common funсtions
+    Common funсtions and exctentions
 *************************************************************/
 
 function isScrolledIntoView(elem)
@@ -601,3 +602,41 @@ function isScrolledIntoView(elem)
     var elemCenter = elem.offset().top + elem.height() / 2;
     return elemCenter < windowBottom && elemCenter > windowTop;
 }
+
+// Add new easings
+$(function() {
+
+});
+$.extend($.easing,
+{
+    def: 'easeOutQuad',
+    swing: function (x, t, b, c, d) {
+        return $.easing[$.easing.def](x, t, b, c, d);
+    },
+    easeInQuad: function (x, t, b, c, d) {
+        return c*(t/=d)*t + b;
+    },
+    easeOutQuad: function (x, t, b, c, d) {
+        return -c *(t/=d)*(t-2) + b;
+    },
+    easeInOutQuad: function (x, t, b, c, d) {
+        if ((t/=d/2) < 1) return c/2*t*t + b;
+        return -c/2 * ((--t)*(t-2) - 1) + b;
+    },
+    easeInCubic: function (x, t, b, c, d) {
+        return c*(t/=d)*t*t + b;
+    },
+    easeOutCubic: function (x, t, b, c, d) {
+        return c*((t=t/d-1)*t*t + 1) + b;
+    },
+    easeInQuart: function (x, t, b, c, d) {
+        return c*(t/=d)*t*t*t + b;
+    },
+    easeOutQuart: function (x, t, b, c, d) {
+        return -c * ((t=t/d-1)*t*t*t - 1) + b;
+    },
+    easeInOutQuart: function (x, t, b, c, d) {
+        if ((t/=d/2) < 1) return c/2*t*t*t*t + b;
+        return -c/2 * ((t-=2)*t*t*t - 2) + b;
+    }
+});
