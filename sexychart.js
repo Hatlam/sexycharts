@@ -539,7 +539,7 @@ sexychart.PlannedAndExecuted.prototype.draw = function (data, options) {
         // Planned
         html.push('<div id="planned-' + this.uid + '">' 
                     + '<p>' + this.planned.label + '</p>' 
-                    + '<span>' + this.planned.value + '</span>' 
+                    + '<span>' + this.planned.value.toLocaleString() + '</span>' 
                     + meassure
                 + '</div>');
 
