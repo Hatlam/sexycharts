@@ -5,18 +5,6 @@
 var sexychart = {};
 
 /************************************************************
-    Common fucntions
-*************************************************************/
-
-function isScrolledIntoView(elem)
-{
-    var windowBottom = $(window).scrollTop() + window.innerHeight;
-    var windowTop = $(window).scrollTop();
-    var elemCenter = elem.offset().top + elem.height() / 2;
-    return elemCenter < windowBottom && elemCenter > windowTop;
-}
-
-/************************************************************
     PieChart visualisation
 
     Data format 
@@ -462,7 +450,7 @@ sexychart.Legend.prototype.setHover = function (coords) {
 }
 
 /************************************************************
-    Planned and Made graph visualisation
+    Planned and Executed graph visualisation
 
     Data format 
         +----------------------------+----------------+
@@ -602,4 +590,14 @@ sexychart.PlannedAndExecuted.prototype.draw = function (data, options) {
 }
 
 
+/************************************************************
+    Common funсtions
+*************************************************************/
 
+function isScrolledIntoView(elem)
+{
+    var windowBottom = $(window).scrollTop() + window.innerHeight;
+    var windowTop = $(window).scrollTop();
+    var elemCenter = elem.offset().top + elem.height() / 2;
+    return elemCenter < windowBottom && elemCenter > windowTop;
+}
