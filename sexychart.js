@@ -111,17 +111,30 @@ sexychart.PieChart.prototype.draw = function (data, options) {
         };
 
         function redrawWithAnimation(ms) {
+
+            // First deal with shadows 
             var startAngle = 0;
             var deltaAngle = 0;
+            for (var i = 0; i < data.length; i++) {
+                var deltaAngle = data[i] / (total * 1.00001) * Math.PI * 2;
+                var p = self.paths[i];
+                var dStroke = (r2 - r1) * 0.22;
+                var shadow = paper.path(sectorPath(x, y, r1 - dStroke, r2 + dStroke, startAngle - 0.04, startAngle + deltaAngle + 0.04));
+                shadow.hide();
+                p.shadow = shadow.glow({width: 5, color: 'black', opacity: 0.001});
+                startAngles[i] = startAngle;
+                startAngle += deltaAngle;
+                endAngles[i] = startAngle;
+            };
 
+            // 
+            startAngle = 0;
+            deltaAngle = 0;
             for (var i = 0; i < data.length; i++) {
                 var deltaAngle = data[i] / (total * 1.00001) * Math.PI * 2;
                 var p = self.paths[i];
                 p.value = data[i];
                 p.formatedValue = data[i];
-                var shadow = paper.path(sectorPath(x, y, r1 - 5, r2 + 5, startAngle - 0.04, startAngle + deltaAngle + 0.04));
-                shadow.hide();
-                p.shadow = shadow.glow({width: 5, color: 'balck', opacity: 0.001});
                 p.animate({sector : [x, y, r1, r2, startAngle, startAngle + deltaAngle]}, ms, "bounce", function() {
                     setAnimation(100);
                     self.hasBeenAnimated = true;      
@@ -205,6 +218,7 @@ sexychart.PieChart.prototype.draw = function (data, options) {
         this.width = this.containerElement.offsetWidth;
         this.height = this.containerElement.offsetWidth;   
     }
+
     this.min = Math.min(this.width, this.height);
 
     var r = Raphael(this.containerElement, this.width, this.height),
