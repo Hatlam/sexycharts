@@ -46,7 +46,6 @@
         var legend = new sexychart.Legend(document.getElementById('table'));
         legend.draw(data, null);
 
-        // When the chart is selected, update the legend.
         google.visualization.events.addListener(chart, 'hover', function() {
           legend.setHover(chart.getHover());
         });

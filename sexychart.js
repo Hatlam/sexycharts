@@ -158,12 +158,14 @@ sexychart.PieChart.prototype.draw = function (data, options) {
             textAttributes = options.textAttr;
         }
 
-        self.txt = paper.text(x, y - self.min * sexychart.DIV_TO_TXT / 6, 
+        var textHeight = textAttributes["font-size"];
+
+        self.txt = paper.text(x, y - textHeight / 10, 
                                 self.formatValue(total)).attr(textAttributes);
 
         if (options && "meassure" in options) {
-            textAttributes["font-size"] /= 2;
-            self.meassure = paper.text(x, y + self.min * sexychart.DIV_TO_TXT * .9, options.meassure)
+            textAttributes['font-size'] /= 2;
+            self.meassure = paper.text(x, y + textHeight * 0.85, options.meassure)
                                 .attr(textAttributes);
         }
         
