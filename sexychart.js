@@ -590,6 +590,165 @@ sexychart.PlannedAndExecuted.prototype.draw = function (data, options) {
     });
 }
 
+/************************************************************
+    BarChart visualisation
+        
+    Data format 
+        First column string (label)
+        Second column number (value)
+        ...
+        N-th column number (value)
+
+    Methods 
+
+    Events 
+
+*************************************************************/
+// Global constant to prevent collisions of different legends
+sexychart.nextBarChartId = 0;
+
+// Constants 
+sexychart.SCALE_SIZE = 5;
+
+// Constructor 
+sexychart.BarChart = function (container) {
+    this.containerElement = container;
+    this.uid = sexychart.nextBarChartId++;
+    this.barBlocks = [];
+    this.maxValue = Number.NEGATIVE_INFINITY,
+    this.minValue = Number.POSITIVE_INFINITY;
+    this.from = 0;
+}
+
+// Check data table
+sexychart.BarChart.prototype.isDataValid = function (data) {
+    var amountOfColumns = data.getNumberOfColumns(),
+        amountOfRows = data.getNumberOfRows();
+
+    if (amountOfColumns < 2 || amountOfRows == 0)
+        return false;
+
+    if (data.getColumnType(0) != 'string')
+        return false;
+
+    for (var colIndex = 1; colIndex < amountOfColumns; ++colIndex) {
+        if (data.getColumnType(colIndex) != 'number')
+            return false;
+    }
+    return true;
+}
+
+// Fill this.barBlcoks
+sexychart.BarChart.prototype.extractData = function (data) {
+    var amountOfColumns = data.getNumberOfColumns(),
+        amountOfRows = data.getNumberOfRows();
+
+    // Add data to this.barBlocks[]
+    for (var rowIndex = 0; rowIndex < amountOfRows; ++rowIndex) {
+        this.barBlocks.push({label: '', values: []});
+        for (var colIndex = 0; colIndex < amountOfColumns; ++colIndex) {
+            if (colIndex == 0) {
+                this.barBlocks[rowIndex].label = data.getValue(rowIndex, colIndex);
+            }
+            else {
+                var currentValue = data.getValue(rowIndex, colIndex);
+                this.barBlocks[rowIndex].values.push(currentValue);
+                if (currentValue < this.minValue) 
+                    this.minValue = currentValue;
+
+                if (currentValue > this.maxValue)
+                    this.maxValue = currentValue;
+            }
+        }
+    }
+}
+
+// Get html of this BarChart
+sexychart.BarChart.prototype.getHtml = function (options) {
+    var html = [],
+        from = ('from' in options) ? options.from : 0,
+        to = ('to' in options) ? options.to : this.maxValue * 1.1,
+        scaleSize = ('scale-size' in options) ? options['scale-size'] : sexychart.SCALE_SIZE;
+
+    html.push('<div id="sc-barchart-{0}">'.format(this.uid));
+
+    // Push measure
+    if ('meassure' in options)
+        html.push('<p id="barchart-measure-{0}">{1}</p>'.format(this.uid, options.meassure));
+
+    // Push scale
+    for (var i = scaleSize - 1; i >= 0; --i) {
+        html.push('<div class="barchart-scale"> <p>{0}</p> <div></div> </div>'
+            .format(Math.round(from + (to - from) / (scaleSize - 1) * i)));
+    }
+
+    // Push bars
+    for (var i = 0; i < this.barBlocks.length; ++i) {
+        var curBlock = this.barBlocks[i];
+        html.push('<div class="barchart-barblock-{0} barchart-barblock">'.format(i));
+            for (var j = 0; j < curBlock.values.length; ++j) {
+                html.push('<div class="barchart-bar-{0} barchart-bar"></div>'.format(j));
+            }
+        html.push('</div>');
+    }
+
+    html.push('</div>');
+
+    return html.join('');
+}
+
+// Animates all bars
+sexychart.BarChart.prototype.animateBars = function (options) {
+    var animationAllowed = true,
+        $chart = $('#sc-barchart-{0}'.format(this.uid));
+
+    var _this = this,
+        from = ('from' in options) ? options.from : 0,
+        scaleSize = ('scale-size' in options) ? options['scale-size'] : sexychart.SCALE_SIZE,
+        to = ('to' in options) ? options.to : this.maxValue * 1.1,
+        chartHeight = $('.barchart-scale').height() * (scaleSize - 1);
+
+    function performAnimation() {
+        $(function () {
+            for (var i = 0; i < _this.barBlocks.length; ++i) {
+                var curBarBlock = _this.barBlocks[i];
+                for (var j = 0; j < curBarBlock.values.length;  ++j) {
+                    var $bar = $('.barchart-barblock-{0} .barchart-bar-{1}'.format(i, j)),
+                        curVal = (curBarBlock.values[j] - from) / (to - from) ;
+                    $bar.css({left: j * 33});
+                    $bar.animate({height: chartHeight * curVal}, { duration: 800, queue: false});
+                };
+            }  
+        });
+    }
+
+    if (isScrolledIntoView($chart) && animationAllowed) {
+
+        performAnimation();
+        animationAllowed = false;
+    }
+
+    $(document).scroll( function(){
+        if (isScrolledIntoView($chart) && animationAllowed) {
+            performAnimation();
+            animationAllowed = false;
+        }
+    });
+}
+
+// Draw method 
+sexychart.BarChart.prototype.draw = function (data, options) {
+    if (this.isDataValid(data))
+    {   
+        this.extractData(data);
+        this.containerElement.innerHTML = this.getHtml(options);
+        this.animateBars(options);
+    }
+    else {
+        // FIX
+        console.log('Wrong table format!');
+    }
+}
 
 /************************************************************
     Common funсtions and exctentions
@@ -603,10 +762,20 @@ function isScrolledIntoView(elem)
     return elemCenter < windowBottom && elemCenter > windowTop;
 }
 
-// Add new easings
-$(function() {
+// Check that is not already implemented
+if (!String.prototype.format) {
+  String.prototype.format = function() {
+    var args = arguments;
+    return this.replace(/{(\d+)}/g, function(match, number) { 
+      return typeof args[number] != 'undefined'
+        ? args[number]
+        : match
+      ;
+    });
+  };
+}
 
-});
+// Add new easings
 $.extend($.easing,
 {
     def: 'easeOutQuad',

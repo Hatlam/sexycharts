@@ -12,6 +12,7 @@
     <div id="table1" style="width: 300px; height: 200px;"></div>
     <div id="income"style="width: 300px; height: 100px;"></div>
     <div id="outcome"style="width: 300px; height: 100px;"></div>
+    <div id="barchart"style="width: 700px; height: 300px;"></div>
 
     <script type="text/javascript">
       google.load("visualization", "1", {packages: ['table']});
@@ -91,6 +92,25 @@
 
         var bar1 = new sexychart.PlannedAndExecuted(document.getElementById('outcome'));
         bar1.draw(barData1, barOptions1);
+
+        /******************************
+                    BarChart
+        *******************************/
+        var bcData = new google.visualization.DataTable();
+        bcData.addColumn('string', 'Label');
+        bcData.addColumn('number', 'Value1');
+        bcData.addColumn('number', 'Value2');
+        bcData.addColumn('number', 'Value3');
+        bcData.addRows([
+                ['2006', 100, 200, 300],
+                ['2007', 100, 200, 300],
+                ['2008', 125, 400, 320]
+            ]);
+
+        var bcOptions = { meassure: 'млн.р.', from: 0, to: 400};
+
+        var barChart1 = new sexychart.BarChart(document.getElementById('barchart'));
+        barChart1.draw(bcData, bcOptions);
       }
     </script>
   </body>
