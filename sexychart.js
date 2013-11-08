@@ -40,7 +40,7 @@ sexychart.PieChart = function (container) {
     this.paths = [];
     this.txt = "";
     this.hasBeenAnimated = false;
-    this.meassure = "";
+    this.measure = "";
     this.width = 0;
     this.height = 0;
     this.min = 0;
@@ -165,9 +165,9 @@ sexychart.PieChart.prototype.draw = function (data, options) {
         self.txt = paper.text(x, y - textHeight / 10, 
                                 self.formatValue(total)).attr(textAttributes);
 
-        if (options && "meassure" in options) {
+        if (options && "measure" in options) {
             textAttributes['font-size'] /= 2;
-            self.meassure = paper.text(x, y + textHeight * 0.85, options.meassure)
+            self.measure = paper.text(x, y + textHeight * 0.85, options.measure)
                                 .attr(textAttributes);
         }
         
@@ -510,9 +510,9 @@ sexychart.PlannedAndExecuted.prototype.draw = function (data, options) {
 
         html.push('<div id="planned-executed-' + this.uid + '">');
 
-        var meassure = "";
-        if ('meassure' in options) {
-            meassure = '<span class="meassure">' + options.meassure +'</span>';
+        var measure = "";
+        if ('measure' in options) {
+            measure = '<span class="measure">' + options.measure +'</span>';
         }
 
         // Title
@@ -525,7 +525,7 @@ sexychart.PlannedAndExecuted.prototype.draw = function (data, options) {
         html.push('<div id="executed-' + this.uid + '">' 
                     + '<p>' + this.executed.label + '</p>' 
                     + '<span>' + this.executed.value + '</span>'
-                    + meassure
+                    + measure
                 + '</div>');
 
         // Pointer
@@ -541,7 +541,7 @@ sexychart.PlannedAndExecuted.prototype.draw = function (data, options) {
         html.push('<div id="planned-' + this.uid + '">' 
                     + '<p>' + this.planned.label + '</p>' 
                     + '<span>' + this.planned.value.toLocaleString() + '</span>' 
-                    + meassure
+                    + measure
                 + '</div>');
 
         html.push('</div>');
@@ -673,8 +673,8 @@ sexychart.BarChart.prototype.getHtml = function (options) {
     html.push('<div id="sc-barchart-{0}">'.format(this.uid));
 
     // Push measure
-    if ('meassure' in options)
-        html.push('<p id="barchart-measure-{0}">{1}</p>'.format(this.uid, options.meassure));
+    if ('measure' in options)
+        html.push('<p class="barchart-measure">{1}</p>'.format(this.uid, options.measure));
 
     // Push scale
     for (var i = scaleSize - 1; i >= 0; --i) {
@@ -689,6 +689,7 @@ sexychart.BarChart.prototype.getHtml = function (options) {
             for (var j = 0; j < curBlock.values.length; ++j) {
                 html.push('<div class="barchart-bar-{0} barchart-bar"></div>'.format(j));
             }
+        html.push('<p>{0}</p>'.format(curBlock.label));
         html.push('</div>');
     }
 
@@ -697,7 +698,72 @@ sexychart.BarChart.prototype.getHtml = function (options) {
     return html.join('');
 }
 
-// Animates all bars
+// Sets layout and basic styling
+sexychart.BarChart.prototype.setUpPositions = function (options) {
+    var $container = $('#sc-barchart-' + this.uid),
+        $scaleLabels = $container.find('.barchart-scale p'),
+        $scaleDivs = $container.find('.barchart-scale div'),
+        $scale = $container.find('.barchart-scale'),
+        $barBlocks = $container.find('.barchart-barblock'),
+        $bars = $container.find('.barchart-bar'),
+        $barLabels = $container.find('.barchart-barblock p');
+        $measure = $container.find('.barchart-measure');
+
+    if ('height' in options && 'width' in options) {
+        $container.height(options.height());
+        $container.width(options.width());
+    }
+    else {
+        $container.height(this.containerElement.offsetHeight);
+        $container.width(this.containerElement.offsetWidth);  
+    }
+
+    var scaleTextWidth = 40,
+        gridHeight = $container.height() - 30,
+        gridWidth = $container.width() - scaleTextWidth,
+        blockWidth = (gridWidth - 2 * scaleTextWidth) / this.barBlocks.length, // with margin
+        barWidth = (blockWidth / 2) / this.barBlocks[0].values.length, // with margin
+        scaleSize = ('scale-size' in options) ? options['scale-size'] : sexychart.SCALE_SIZE,
+        scaleDivHeight = gridHeight / scaleSize * 0.7;
+
+    debugger;
+
+    // Set scale labels and measure 
+    $scaleLabels.each( function () {
+        $(this).width(scaleTextWidth);
+    });
+    $measure.each( function() {
+        $(this).width(scaleTextWidth); 
+    })
+
+    // Set scale divs 
+    $scale.each( function () {
+        $(this).width(gridWidth);
+        $(this).height(scaleDivHeight);
+    });
+    $scaleDivs.each( function () {
+        $(this).width(gridWidth - scaleTextWidth - 20);
+        $(this).height(scaleDivHeight);
+    });
+
+    // Set bars
+    $barBlocks.each( function (i) {
+        $(this).width(blockWidth / 2);
+        if (i == 0)
+            $(this).css({'margin-left': blockWidth / 2 + scaleTextWidth});
+        else     
+            $(this).css({'margin-left': blockWidth / 2});
+    });
+    $bars.each( function(i) {
+        $(this).width(barWidth);
+    });
+    $barLabels.each( function () {
+        $(this).width(blockWidth / 2 * 1.3);
+    });
+
+}
+
+// Animates all bars and sets its positions
 sexychart.BarChart.prototype.animateBars = function (options) {
     var animationAllowed = true,
         $chart = $('#sc-barchart-{0}'.format(this.uid));
@@ -715,7 +781,8 @@ sexychart.BarChart.prototype.animateBars = function (options) {
                 for (var j = 0; j < curBarBlock.values.length;  ++j) {
                     var $bar = $('.barchart-barblock-{0} .barchart-bar-{1}'.format(i, j)),
                         curVal = (curBarBlock.values[j] - from) / (to - from) ;
-                    $bar.css({left: j * 33});
+                    // setting position
+                    $bar.css({left: $bar.width() * 1.2 * j});
                     $bar.animate({height: chartHeight * curVal}, { duration: 800, queue: false});
                 };
             }  
@@ -742,6 +809,7 @@ sexychart.BarChart.prototype.draw = function (data, options) {
     {   
         this.extractData(data);
         this.containerElement.innerHTML = this.getHtml(options);
+        this.setUpPositions(options);
         this.animateBars(options);
     }
     else {

@@ -75,7 +75,7 @@ ul.legend-0 li span {
 			color: #71c499;
 		}
 
-		#executed-0 .meassure {
+		#executed-0 .measure {
 			display: inline;
 			font-size: 12px;
 			margin-left: 3px;
@@ -97,7 +97,7 @@ ul.legend-0 li span {
 			font-size: 24px;
 			color: #71c499;
 		}
-		#planned-0 .meassure {
+		#planned-0 .measure {
 			display: inline;
 			font-size: 12px;
 			margin-left: 3px;
@@ -181,7 +181,7 @@ ul.legend-0 li span {
 			color: #ffcc33;
 		}
 
-		#executed-1 .meassure {
+		#executed-1 .measure {
 			display: inline;
 			font-size: 12px;
 			margin-left: 3px;
@@ -203,7 +203,7 @@ ul.legend-0 li span {
 			font-size: 24px;
 			color: #ffcc33;
 		}
-		#planned-1 .meassure {
+		#planned-1 .measure {
 			display: inline;
 			font-size: 12px;
 			margin-left: 3px;
@@ -256,11 +256,21 @@ ul.legend-0 li span {
 		top: 29px;
 		left: 20px;
 	}
+/***********************************/
+/* 		Styling for barchart       */
+/***********************************/
+#barchart {
+	margin: 20px;
+}
 
 #sc-barchart-0 {
-	margin: 20px;
 	position: relative;
+}
 
+#sc-barchart-0 p {
+	font-size: 11px;
+	color: #c0c0c0;
+	font-weight: 300;
 }
 
 .barchart-scale {
@@ -293,7 +303,7 @@ ul.legend-0 li span {
 	width: 500px;
 	height: 39;
 	background: transparent;
-	border-bottom: 1px dotted #bbb;
+	border-bottom: 1px dotted #c0c0c0;
 	margin: 0;
 	padding: 0;
 }
@@ -304,8 +314,24 @@ ul.legend-0 li span {
 	margin-left: 130px;
 	left: 0;
 	z-index: 2;
-	width: auto;
-	height: auto;
+}
+
+.barchart-barblock p {
+	display: block;
+	position: absolute;
+	z-index: 5;
+	top: 7px;
+	margin: 0;
+	padding: 0;
+	width: 60px;
+	text-align: center;
+}
+
+.barchart-measure {
+	padding: 0;
+	margin: 0;
+	width: 40px;
+	text-align: right;
 }
 
 .barchart-bar {
@@ -314,16 +340,15 @@ ul.legend-0 li span {
 	left: 0;
 	bottom: 0;
 	z-index: 3;
-	width: 25px;
-	margin-right: 3px;
+	margin-left: 3px;
 }
 
 .barchart-bar-0 {
-	background-color: #009999;
+	background-color: #71c499;
 }
 
 .barchart-bar-1 {
-	background-color: #86B32D;
+	background-color: #ffcc33;
 }
 
 .barchart-bar-2 {
