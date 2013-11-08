@@ -736,8 +736,8 @@ sexychart.BarChart.prototype.setUpPositions = function (options) {
         $info = $('#barchart-info-' + this.uid);
 
     if ('height' in options && 'width' in options) {
-        $container.height(options.height());
-        $container.width(options.width());
+        $container.height(options.height);
+        $container.width(options.width);
     }
     else {
         $container.height(this.containerElement.offsetHeight);
@@ -792,7 +792,7 @@ sexychart.BarChart.prototype.setUpPositions = function (options) {
                             + '<span class="total">{0} млн.р.</span>' 
                             + '<span class ="spent"> / {1} млн.р. </span> </br>'
                             + '<span class = "prof">{2}</span> </br>'
-                            + '<span class="left">{3} млнр.р.<span>' 
+                            + '<span class="left">{3} млн.р.<span>' 
                         + '<div>').format(total.toLocaleString(), 
                                             spent.toLocaleString(),
                                             (left >= 0) ? 'профицит' : 'дефицит',
