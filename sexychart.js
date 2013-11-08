@@ -745,12 +745,12 @@ sexychart.BarChart.prototype.setUpPositions = function (options) {
     }
 
     var scaleTextWidth = 40,
-        gridHeight = $container.height() - 30,
+        gridHeight = $container.height() - 50,
         gridWidth = $container.width() - scaleTextWidth,
         blockWidth = (gridWidth - 2 * scaleTextWidth) / this.barBlocks.length, // with margin
         barWidth = (blockWidth / 2) / this.barBlocks[0].values.length, // with margin
         scaleSize = ('scale-size' in options) ? options['scale-size'] : sexychart.SCALE_SIZE,
-        scaleDivHeight = gridHeight / scaleSize - 10,
+        scaleDivHeight = gridHeight / scaleSize,
         chartHeight = scaleDivHeight * (scaleSize - 1);
 
 
