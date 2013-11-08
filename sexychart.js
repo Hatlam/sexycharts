@@ -779,6 +779,7 @@ sexychart.BarChart.prototype.setUpPositions = function (options) {
         else     
             $(this).css({'margin-left': blockWidth / 2});
 
+        var animationAllowed = false;
         $(this).hover( function () {
             $info.css(
                 {left: scaleTextWidth + 10 + blockWidth * 0.735 - $info.width() / 2 + blockWidth * i,
@@ -798,10 +799,13 @@ sexychart.BarChart.prototype.setUpPositions = function (options) {
                                             (left >= 0) ? 'профицит' : 'дефицит',
                                             Math.abs(left).toLocaleString()
                                         ));
+            $info.stop(true, true).animate({opacity: 1});
+
         }, function () {
-            $info.css({display: 'none'});
+            $info.stop(true, true).delay(400).animate( {opacity: 0});
         });
     });
+
     $bars.each( function(i) {
         $(this).width(barWidth);
     });
