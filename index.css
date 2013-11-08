@@ -261,6 +261,7 @@ ul.legend-0 li span {
 /***********************************/
 #barchart {
 	margin: 20px;
+	margin-top: 60px;
 }
 
 #sc-barchart-0 {
@@ -273,6 +274,58 @@ ul.legend-0 li span {
 	font-weight: 300;
 }
 
+#barchart-info-0 {
+	position: absolute;
+	display: none;
+	z-index: 4;
+	background-color: #71c499;
+	left: 100;
+	width: 200px;
+	height: 80px;
+}
+
+#barchart-info-0:before {
+	position: absolute;
+	content: '';
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 10px solid #71c499;
+	top: 80px;
+	left: 97px;
+}
+
+#barchart-info-0 .inner-div{
+	padding-top: 5px;
+	padding-bottom: 10px;
+	text-align: center;
+}
+	#barchart-info-0 span {
+		text-align: center;
+		color: white;
+		font-size: 12px;
+		font-weight: 300;
+		line-height: 200%;
+	}
+
+	#barchart-info-0 .total {
+		text-align: center;
+		color: #bdffc6;
+	}
+
+	#barchart-info-0 .spent {
+		text-align: center;
+	}
+
+	#barchart-info-0 .prof {
+		font-size: 11px;
+		text-align: center;
+	}
+
+	#barchart-info-0 .left {
+		text-align: center;
+	}
 .barchart-scale {
 	position: relative;
 	display: block;
@@ -309,9 +362,11 @@ ul.legend-0 li span {
 }
 
 .barchart-barblock {
+	opacity: 0.7;
 	display: inline-block;
 	position: relative;
 	margin-left: 130px;
+	bottom: -1px;
 	left: 0;
 	z-index: 2;
 }
@@ -325,6 +380,10 @@ ul.legend-0 li span {
 	padding: 0;
 	width: 60px;
 	text-align: center;
+}
+
+.barchart-barblock:hover {
+	opacity: 1;
 }
 
 .barchart-measure {
