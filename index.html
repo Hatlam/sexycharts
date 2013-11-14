@@ -13,6 +13,8 @@
     <div id="income"style="width: 300px; height: 100px;"></div>
     <div id="outcome"style="width: 300px; height: 100px;"></div>
     <div id="barchart"></div>
+    <div id="incomesimple" style="width: 600px; height: 100px;"></div>
+    <div id="donediv" style="width: 600px; height: 200px;"></div>
 
     <script type="text/javascript">
       google.load("visualization", "1", {packages: ['table']});
@@ -114,10 +116,42 @@
                 ['2013', 4000, 3500]
             ]);
 
-        var bcOptions = { measure: 'млн.р.', from: 0, to: 6000, 'scale-size': 10, width: 950, height: 400};
+        var bcOptions = { measure: 'млн.р.', from: 0, to: 6000, 'scale-size': 4, width: 950, height: 200};
 
         var barChart1 = new sexychart.BarChart(document.getElementById('barchart'));
         barChart1.draw(bcData, bcOptions);
+
+        /******************************
+                Income (simple)
+        *******************************/
+        var inSimpData = new google.visualization.DataTable();
+        inSimpData.addColumn('string', 'Label');
+        inSimpData.addColumn('number', 'Value');
+        inSimpData.addRows([
+                ['исполнено', 1779.5],
+                ['запланировано', 4124.2]
+            ]);
+
+        var inSimpOptions = {title: 'Доходы', measure: 'млн.р.'};
+
+        var inSimpBar = new sexychart.PlannedAndExecuted(document.getElementById('incomesimple'));
+        inSimpBar.draw(inSimpData, inSimpOptions);
+
+        /******************************
+                    Done bar
+        *******************************/
+        var doneData = new google.visualization.DataTable();
+        doneData.addColumn('string', 'Label');
+        doneData.addColumn('number', 'Value');
+        doneData.addRows([
+                ['исполнено', 77],
+                ['запланировано', 160]
+            ]);
+
+        var doneOptions = {title: '', measure: 'млн.р.'};
+
+        var doneBar = new sexychart.PlannedAndExecuted(document.getElementById('donediv'));
+        doneBar.draw(doneData, doneOptions);
       }
     </script>
   </body>

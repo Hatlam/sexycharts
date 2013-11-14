@@ -413,3 +413,181 @@ ul.legend-0 li span {
 .barchart-bar-2 {
 	background-color: #BF3030;
 }
+
+.barchart-bar-3 {
+	background-color: pink;
+}
+
+/* Styling for bar 2 (simplified)*/
+#planned-executed-2 {
+	position: relative;
+	width: 980px;
+	background-color: #76C597;
+}
+
+	#planned-executed-2 h1 {
+		font-size: 28px;
+		color: #fff;
+		font-weight: 500;
+		display: inline;
+		vertical-align: top;
+	}
+
+	#executed-2 {
+		display: inline-block;
+		margin-left: 20px;
+		width: 150px;
+	}
+		#executed-2 p {
+			margin: 2px 0 0 0;
+			font-size: 20px;
+			color: #a6e1ae;
+		}
+		#executed-2 span {
+			margin: 2px 0 0 0;
+			font-size: 24px;
+			color: #a6e1ae;
+		}
+
+		#executed-2 .measure {
+			display: inline;
+			font-size: 12px;
+			margin-left: 3px;
+			color: #a6e1ae;
+		}
+
+	#planned-2 {
+		width: 150px;
+		margin-left: 27px;
+		display: inline-block;
+	}
+		#planned-2 p {
+			margin: 2px 0 0 0;
+			font-size: 20px;
+			color: #a6e1ae;
+		}
+		#planned-2 span {
+			margin: 2px 0 0 0;
+			font-size: 24px;
+			color: #a6e1ae;
+		}
+		#planned-2 .measure {
+			display: inline;
+			font-size: 12px;
+			margin-left: 3px;
+			color: #a6e1ae;
+		}
+
+	#planned-bar-2 {
+		width: 420px;
+		height: 40px;
+		margin-left: 27px;
+		background: #a6e1ae;
+		display: inline-block;
+	}
+
+	#executed-bar-2 {
+		position: absolute;
+		top: 34px;
+		left: 195px;
+		z-index: 1;
+		height: 40px;
+		background: #b6f7bf;
+		display: block;
+	}	
+
+	#planned-executed-bubble-2 {
+		display: none;
+	}
+
+	#planned-executed-bubble-2:before {
+		display: none;	
+	}
+
+/* Styling for bar 3 (ultra-simplified)*/
+#planned-executed-3 {
+	position: relative;
+}
+
+	#planned-executed-3 h1 {
+		display: none;
+	}
+
+	#executed-3 {
+		position: absolute;
+		display: block;
+		z-index: 1;
+		top: -3px;
+		left: 42px;
+		width: 150px;
+	}
+		#executed-3 p {
+			font-size: 14px;
+			color: #cecece;
+		}
+		#executed-3 span {
+			display: block;
+			margin: 45px 0 0 5px;
+			font-size: 14px;
+			color: #cecece;
+			float: left;
+		}
+
+		#executed-3 .measure {
+			display: inline;
+			font-size: 14px;
+			margin-left: 3px;
+			color: #cecece;
+		}
+
+	#planned-3 {
+		display: none;
+	}
+
+	#planned-bar-3 {
+		width: 160px;
+		height: 15px;
+		margin-left: 27px;
+		margin: 60px 0 60px 0;
+		background: #f6f6f6;
+		display: inline-block;
+	}
+
+	#executed-bar-3 {
+		position: absolute;
+		top: 34px;
+		left: 195px;
+		z-index: 1;
+		height: 15px;
+		background: #cecece;
+		display: block;
+	}	
+
+	#planned-executed-bubble-3 {
+		position: absolute;
+		width: 50px;
+		height: 18px;
+		z-index: 2;
+		left: 331px;
+		top: 29px;
+		background: #fff;
+		text-align: center;
+		vertical-align: baseline;
+		padding: 6px 0 6px 0;
+		border-radius: 30px;
+		font-size: 14px;
+		font-weight: 500;
+		color: #cecece;
+	}
+
+	#planned-executed-bubble-3:before {
+		position: absolute;
+		content: '';
+		width: 0;
+		height: 0;
+		border-left: 5px solid transparent;
+		border-right: 5px solid transparent;
+		border-top: 10px solid #fff;
+		top: 28px;
+		left: 20px;
+	}

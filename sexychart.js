@@ -570,7 +570,7 @@ sexychart.PlannedAndExecuted.prototype.draw = function (data, options) {
         ebar.width(0);
         ebar.animate({width: plannedWidth}, 1000, 'easeOutQuad');
         ebar.offset(pbar.offset());
-        bubble.offset({left: bubbleLeft, top: bubbleTop});
+        bubble.offset({left: bubbleLeft});
         bubble.animate({marginLeft: plannedWidth}, 1000, 'easeOutQuad');
         self.animateCounter(bubble, 0, percents, '', '%', 0, 1000);
         self.animateCounter(executedSpan, 0, self.executed.value, '', '', 1, 1000);    
@@ -753,7 +753,6 @@ sexychart.BarChart.prototype.setUpPositions = function (options) {
         scaleDivHeight = gridHeight / scaleSize,
         chartHeight = scaleDivHeight * (scaleSize - 1);
 
-
     // Set scale labels and measure 
     $scaleLabels.each( function () {
         $(this).width(scaleTextWidth);
@@ -800,7 +799,6 @@ sexychart.BarChart.prototype.setUpPositions = function (options) {
                                             Math.abs(left).toLocaleString()
                                         ));
             $info.stop(true, true).animate({opacity: 1});
-
         }, function () {
             $info.stop(true, true).delay(400).animate( {opacity: 0});
         });
