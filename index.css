@@ -279,7 +279,8 @@ ul.legend-0 li span {
 	display: none;
 	z-index: 4;
 	background-color: #71c499;
-	left: 100;
+	left: -80;
+	margin-bottom: -40px;
 	width: 200px;
 	height: 80px;
 }
@@ -362,7 +363,6 @@ ul.legend-0 li span {
 }
 
 .barchart-barblock {
-	opacity: 0.7;
 	display: inline-block;
 	position: relative;
 	margin-left: 130px;
@@ -382,7 +382,7 @@ ul.legend-0 li span {
 	text-align: center;
 }
 
-.barchart-barblock:hover {
+.barchart-barblock:hover .barchart-bar {
 	opacity: 1;
 }
 
@@ -394,6 +394,7 @@ ul.legend-0 li span {
 }
 
 .barchart-bar {
+	opacity: 0.7;
 	display: inline-block;
 	position: absolute;
 	left: 0;

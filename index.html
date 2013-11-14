@@ -15,6 +15,7 @@
     <div id="barchart"></div>
     <div id="incomesimple" style="width: 600px; height: 100px;"></div>
     <div id="donediv" style="width: 600px; height: 200px;"></div>
+    <div id="bcpdiv" style="width: 600px; height: 400px;"></div>
 
     <script type="text/javascript">
       google.load("visualization", "1", {packages: ['table']});
@@ -116,7 +117,28 @@
                 ['2013', 4000, 3500]
             ]);
 
-        var bcOptions = { measure: 'млн.р.', from: 0, to: 6000, 'scale-size': 4, width: 950, height: 200};
+
+        var deficit = function (i) {
+            var total = bcData.getValue(i, 1),
+                spent = bcData.getValue(i, 2),
+                left = total - spent,
+                html = ('<div class="inner-div">'
+                            + '<span class="total">{0} млн.р.</span>' 
+                            + '<span class ="spent"> / {1} млн.р. </span> </br>'
+                            + '<span class = "prof">{2}</span> </br>'
+                            + '<span class="left">{3} млн.р.<span>' 
+                        + '<div>').format(total.toLocaleString(), 
+                                            spent.toLocaleString(),
+                                            (left >= 0) ? 'профицит' : 'дефицит',
+                                            Math.abs(left).toLocaleString()
+                                        );
+            return html;
+        }
+
+        var bcOptions = { measure: 'млн.р.', 
+                        from: 0, to: 6000, 'scale-size': 4, 
+                        width: 950, height: 200,
+                        'bubble-contents': deficit};
 
         var barChart1 = new sexychart.BarChart(document.getElementById('barchart'));
         barChart1.draw(bcData, bcOptions);
@@ -140,6 +162,7 @@
         /******************************
                     Done bar
         *******************************/
+
         var doneData = new google.visualization.DataTable();
         doneData.addColumn('string', 'Label');
         doneData.addColumn('number', 'Value');
@@ -148,10 +171,36 @@
                 ['запланировано', 160]
             ]);
 
+
         var doneOptions = {title: '', measure: 'млн.р.'};
 
         var doneBar = new sexychart.PlannedAndExecuted(document.getElementById('donediv'));
         doneBar.draw(doneData, doneOptions);
+
+        /******************************
+            Bar chart with pictures
+        *******************************/
+        var bcpData = new google.visualization.DataTable();
+        bcpData.addColumn('string', 'Label');
+        bcpData.addColumn('number', 'Value1');
+        bcpData.addRows([
+                ['', 1000],
+                ['', 3000],
+                ['', 3100],
+                ['', 4000],
+                ['', 4000],
+                ['', 3100],
+                ['', 4000],
+                ['', 4000],
+                ['', 3100],
+                ['', 4000],
+                ['', 4000]
+            ]);
+
+        var bcpOptions = { measure: 'млн.р.', from: 0, to: 9000, 'scale-size': 10, width: 950, height: 400};
+
+        var bcpChart = new sexychart.BarChart(document.getElementById('bcpdiv'));
+        bcpChart.draw(bcpData, bcpOptions);
       }
     </script>
   </body>

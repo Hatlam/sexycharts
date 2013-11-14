@@ -732,8 +732,7 @@ sexychart.BarChart.prototype.setUpPositions = function (options) {
         $barBlocks = $container.find('.barchart-barblock'),
         $bars = $container.find('.barchart-bar'),
         $barLabels = $container.find('.barchart-barblock p');
-        $measure = $container.find('.barchart-measure'),
-        $info = $('#barchart-info-' + this.uid);
+        $measure = $container.find('.barchart-measure');
 
     if ('height' in options && 'width' in options) {
         $container.height(options.height);
@@ -772,6 +771,8 @@ sexychart.BarChart.prototype.setUpPositions = function (options) {
     });
 
     $barBlocks.each( function (i) {
+        $thisBlock = $(this);
+
         $(this).width(blockWidth / 2);
         if (i == 0)
             $(this).css({'margin-left': scaleTextWidth + blockWidth * 0.4 + 10});
@@ -780,26 +781,23 @@ sexychart.BarChart.prototype.setUpPositions = function (options) {
 
         var animationAllowed = false;
         $(this).hover( function () {
+            var $info = $('#barchart-info-' + _this.uid);
             $info.css(
-                {left: scaleTextWidth + 10 + blockWidth * 0.735 - $info.width() / 2 + blockWidth * i,
-                bottom: $info.height() + _this.barBlocks[i].height, 
+                { bottom: $info.height() + _this.barBlocks[i].height, 
                 display: 'block'});
-            var total = _this.barBlocks[i].values[0],
-                spent = _this.barBlocks[i].values[1],
-                left = total - spent;
 
-            $info.html(('<div class="inner-div">'
-                            + '<span class="total">{0} млн.р.</span>' 
-                            + '<span class ="spent"> / {1} млн.р. </span> </br>'
-                            + '<span class = "prof">{2}</span> </br>'
-                            + '<span class="left">{3} млн.р.<span>' 
-                        + '<div>').format(total.toLocaleString(), 
-                                            spent.toLocaleString(),
-                                            (left >= 0) ? 'профицит' : 'дефицит',
-                                            Math.abs(left).toLocaleString()
-                                        ));
+            $(this).append($info);
+
+            if ('bubble-contents' in options) {
+                $info.html(options['bubble-contents'](i));    
+            }
+            else {
+                $info.html('');    
+            }
+            
             $info.stop(true, true).animate({opacity: 1});
         }, function () {
+            var $info = $('#barchart-info-' + _this.uid);
             $info.stop(true, true).delay(400).animate( {opacity: 0});
         });
     });
@@ -821,14 +819,14 @@ sexychart.BarChart.prototype.animateBars = function (options) {
         from = ('from' in options) ? options.from : 0,
         scaleSize = ('scale-size' in options) ? options['scale-size'] : sexychart.SCALE_SIZE,
         to = ('to' in options) ? options.to : this.maxValue * 1.1,
-        chartHeight = $('.barchart-scale').height() * (scaleSize - 1);
+        chartHeight = $chart.find('.barchart-scale').height() * (scaleSize - 1);
 
     function performAnimation() {
         $(function () {
             for (var i = 0; i < _this.barBlocks.length; ++i) {
                 var curBarBlock = _this.barBlocks[i];
                 for (var j = 0; j < curBarBlock.values.length;  ++j) {
-                    var $bar = $('.barchart-barblock-{0} .barchart-bar-{1}'.format(i, j)),
+                    var $bar = $chart.find('.barchart-barblock-{0} .barchart-bar-{1}'.format(i, j)),
                         curVal = (curBarBlock.values[j] - from) / (to - from) ;
                     // setting position
                     $bar.css({left: $bar.width() * 1.2 * j});
@@ -839,7 +837,6 @@ sexychart.BarChart.prototype.animateBars = function (options) {
     }
 
     if (isScrolledIntoView($chart) && animationAllowed) {
-
         performAnimation();
         animationAllowed = false;
     }
