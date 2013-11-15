@@ -184,20 +184,19 @@
         bcpData.addColumn('string', 'Label');
         bcpData.addColumn('number', 'Value1');
         bcpData.addRows([
-                ['', 1000],
                 ['', 3000],
-                ['', 3100],
+                ['', 6000],
+                ['', 7100],
                 ['', 4000],
                 ['', 4000],
                 ['', 3100],
-                ['', 4000],
-                ['', 4000],
-                ['', 3100],
-                ['', 4000],
-                ['', 4000]
+                ['', 6000],
+                ['', 7000],
+                ['', 5100],
+                ['', 6000],
             ]);
 
-        var bcpOptions = { measure: 'млн.р.', from: 0, to: 9000, 'scale-size': 10, width: 950, height: 400};
+        var bcpOptions = { measure: 'млн.р.', from: 0, to: 9000, 'scale-size': 10, width: 950, height: 350};
 
         var bcpChart = new sexychart.BarChart(document.getElementById('bcpdiv'));
         bcpChart.draw(bcpData, bcpOptions);

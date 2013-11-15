@@ -592,3 +592,211 @@ ul.legend-0 li span {
 		top: 28px;
 		left: 20px;
 	}
+
+/***********************************/
+/* 		Styling for barchart  2     */
+/***********************************/
+#sc-barchart-1 {
+	position: relative;
+}
+
+#sc-barchart-1 p {
+	font-size: 11px;
+	color: #c0c0c0;
+	font-weight: 300;
+}
+
+#barchart-info-1 {
+	position: absolute;
+	display: none;
+	z-index: 4;
+	background-color: #71c499;
+	left: -76;
+	top: 20px;
+	width: 200px;
+	height: 60px;
+}
+
+#barchart-info-1:before {
+	position: absolute;
+	content: '';
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-bottom: 10px solid #71c499;
+	top: -10px;
+	left: 97px;
+}
+
+#barchart-info-1 .inner-div{
+	padding-top: 5px;
+	padding-bottom: 10px;
+	text-align: center;
+}
+	#barchart-info-1 span {
+		text-align: center;
+		color: white;
+		font-size: 12px;
+		font-weight: 300;
+		line-height: 200%;
+	}
+
+	#barchart-info-1 .total {
+		text-align: center;
+		color: #bdffc6;
+	}
+
+	#barchart-info-1 .spent {
+		text-align: center;
+	}
+
+	#barchart-info-1 .prof {
+		font-size: 11px;
+		text-align: center;
+	}
+
+	#barchart-info-1 .left {
+		text-align: center;
+	}
+.barchart-scale {
+	position: relative;
+	display: block;
+	width: 600px;
+	height: 40px;
+	margin: 0;
+	padding: 0;
+
+}
+
+.barchart-scale p {
+	position: relative;
+	z-index: 1;
+	bottom: 0;
+	display: inline-block;
+	width: 40px;
+	margin: 0 10px 10px 0;
+	padding: 0;
+	text-align: right;
+}
+
+.barchart-scale div {
+	position: relative;
+	z-index: 1;
+	bottom: 0;
+	display: inline-block;
+	bottom: 0;
+	width: 500px;
+	height: 39;
+	background: transparent;
+	border-bottom: 1px dotted #c0c0c0;
+	margin: 0;
+	padding: 0;
+}
+
+.barchart-barblock {
+	display: inline-block;
+	position: relative;
+	margin-left: 130px;
+	bottom: -1px;
+	left: 0;
+	z-index: 2;
+}
+
+.barchart-barblock p {
+	display: block;
+	position: absolute;
+	z-index: 5;
+	top: 7px;
+	margin: 0;
+	padding: 0;
+	width: 60px;
+	text-align: center;
+}
+
+.barchart-barblock:hover .barchart-bar {
+	opacity: 1;
+}
+
+.barchart-measure {
+	padding: 0;
+	margin: 0;
+	width: 40px;
+	text-align: right;
+}
+
+.barchart-bar {
+	opacity: 0.7;
+	display: inline-block;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	z-index: 3;
+	margin-left: 3px;
+}
+
+#sc-barchart-1 .barchart-barblock .barchart-bar {
+	border-radius: 6px;
+	background: white;
+}
+
+#sc-barchart-1 .barchart-barblock-0 .barchart-bar {
+	border: 2px solid #d46854;
+	background: url(budget/shield.png) no-repeat;
+	background-position: center bottom;
+}
+
+#sc-barchart-1 .barchart-barblock-1 .barchart-bar {
+	border: 2px solid #ff7734;
+	background: url(budget/pot.png) no-repeat;
+	background-position: center bottom;
+}
+
+#sc-barchart-1 .barchart-barblock-2 .barchart-bar {
+	border: 2px solid #e99031;
+	background: url(budget/heart.png) no-repeat;
+	background-position: center bottom;
+}
+
+#sc-barchart-1 .barchart-barblock-3 .barchart-bar {
+	border: 2px solid #fba242;	
+	background: url(budget/city.png) no-repeat;
+	background-position: center bottom;
+}
+
+#sc-barchart-1 .barchart-barblock-4 .barchart-bar {
+	border: 2px solid #ffd647;
+	background: url(budget/palms.png) no-repeat;
+	background-position: center bottom;	
+}
+
+
+#sc-barchart-1 .barchart-barblock-5 .barchart-bar {
+	border: 2px solid #ffe17a;
+	background: url(budget/case.png) no-repeat;
+	background-position: center bottom;	
+}
+
+#sc-barchart-1 .barchart-barblock-6 .barchart-bar {
+	border: 2px solid #fff47c;
+	background: url(budget/book.png) no-repeat;
+	background-position: center bottom;	
+}
+
+#sc-barchart-1 .barchart-barblock-7 .barchart-bar {
+	border: 2px solid #f1d659;
+	background: url(budget/tap.png) no-repeat;
+	background-position: center bottom;	
+}
+
+#sc-barchart-1 .barchart-barblock-8 .barchart-bar {
+	border: 2px solid #d4af60;
+	background: url(budget/car.png) no-repeat;
+	background-position: center bottom;	
+}
+
+#sc-barchart-1 .barchart-barblock-9 .barchart-bar {
+	border: 2px solid #d47e60;
+	background: url(budget/dots.png) no-repeat;
+	background-position: center bottom;	
+}
