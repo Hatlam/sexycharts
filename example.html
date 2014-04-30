@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="index.css"/>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script src="jquery.js"></script>
+    <script src="raphael.js"></script>
+    <script src="sexychart.js"></script>
+  </head>
+
+  <body>
+    <div id="development" style="width: 300px; height: 300px; margin-left: 35px;"></div>
+    <div id="legend" style="width: 600px; height: 80px;"></div>
+
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages: ['table']});
+      google.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        // Create storage for our data
+        var data = new google.visualization.DataTable();
+
+        // Add data
+        data.addColumn('string', 'Label');
+        data.addColumn('number', 'Value');
+        data.addColumn('string', 'Color')
+        data.addRows([
+                ['Eating cookies', 15.3, '#ADD7B8'],
+                ['Playing table tennis', 17.3, '#88FFC4'],
+                ['Thinking about stuff', 1.3, '#00E397'],
+                ['Coding', 20.3, '#71C499'],
+            ]);
+
+        // Set options
+        var options = {measure: "Hours",
+                       textAttr: {'font-size': 40,
+                                  'font-family':'Verdana, Verdana, sans-serif',
+                                  'fill': '#ADD7B8'}}; // font color
+
+        // Initialize chart
+        chart = new sexychart.PieChart(document.getElementById('development'));
+
+        // Draw chart
+        chart.draw(data, options);
+
+        // Initialize legend
+        var legend = new sexychart.Legend(document.getElementById('legend'));
+
+        // Draw legend
+        legend.draw(data, null);
+
+        // Setup events
+        google.visualization.events.addListener(chart, 'hover', function() {
+          legend.setHover(chart.getHover());
+        });
+
+        google.visualization.events.addListener(legend, 'hover', function() {
+          chart.setHover(legend.getHover());
+        });
+      }
+
+    </script>
+
+  </body>
+</html>
