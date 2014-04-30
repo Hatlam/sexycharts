@@ -68,7 +68,7 @@ function drawChart() {
 ```
 
 Here is what we have now:
-
+![alt text](https://github.com/Hatlam/sexycharts/blob/master/images/chart.png?raw=true "Development Cycle")
 Awesome, isn't it? Saddly, we don't see any labels. That's why we have a `sexychart.Legend` for it!
 So lets add it to our chart. This is quite simple.
 
@@ -95,8 +95,9 @@ And add following js to the end of our `drawChart()` function:
 ```
 Here is the final result:
 
+![alt text](https://github.com/Hatlam/sexycharts/blob/master/images/legend.png?raw=true Final Result)
 
-There more examples in of usage other charts in `index.html` file.
+There are more examples in `index.html` file.
 
 Enjoy!
 
