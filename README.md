@@ -68,7 +68,9 @@ function drawChart() {
 ```
 
 Here is what we have now:
+
 ![alt text](https://github.com/Hatlam/sexycharts/blob/master/images/chart.png?raw=true "Development Cycle")
+
 Awesome, isn't it? Saddly, we don't see any labels. That's why we have a `sexychart.Legend` for it!
 So lets add it to our chart. This is quite simple.
 
