@@ -1,9 +1,9 @@
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="index.css"/>
+    <link rel="stylesheet" type="text/css" href="sexychart.css"/>
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
-    <script src="jquery.js"></script>
-    <script src="raphael.js"></script>
+    <script src="vendor/jquery.js"></script>
+    <script src="vendor/raphael.js"></script>
     <script src="sexychart.js"></script>
   </head>
   <body>
@@ -44,10 +44,10 @@
         data.setCell(2, 2, '#00E397');
         data.setCell(3, 2, '#71C499');
 
-        var options = {measure: "млн.р.", textAttr: {'font-size': 40, 
+        var options = {measure: "млн.р.", textAttr: {'font-size': 40,
                                                 'font-family':'Verdana, Verdana, sans-serif',
                                                 'fill': '#ADD7B8'}};
-                                                
+
         chart = new sexychart.PieChart(document.getElementById('chartdiv'));
         chart.draw(data, options);
 
@@ -123,11 +123,11 @@
                 spent = bcData.getValue(i, 2),
                 left = total - spent,
                 html = ('<div class="inner-div">'
-                            + '<span class="total">{0} млн.р.</span>' 
+                            + '<span class="total">{0} млн.р.</span>'
                             + '<span class ="spent"> / {1} млн.р. </span> </br>'
                             + '<span class = "prof">{2}</span> </br>'
-                            + '<span class="left">{3} млн.р.<span>' 
-                        + '<div>').format(total.toLocaleString(), 
+                            + '<span class="left">{3} млн.р.<span>'
+                        + '<div>').format(total.toLocaleString(),
                                             spent.toLocaleString(),
                                             (left >= 0) ? 'профицит' : 'дефицит',
                                             Math.abs(left).toLocaleString()
@@ -135,8 +135,8 @@
             return html;
         }
 
-        var bcOptions = { measure: 'млн.р.', 
-                        from: 0, to: 6000, 'scale-size': 4, 
+        var bcOptions = { measure: 'млн.р.',
+                        from: 0, to: 6000, 'scale-size': 4,
                         width: 950, height: 200,
                         'bubble-contents': deficit};
 

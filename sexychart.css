@@ -4,11 +4,11 @@ body {
 }
 
 ul {
-	float: left;
+	padding: 0;
 }
 
 ul.legend-0 li {
-	display: block; 
+	display: block;
 	border-radius: 5px;
 	width: 300px;
 	list-style: none;
@@ -120,7 +120,7 @@ ul.legend-0 li span {
 		height: 40px;
 		background: #71c499;
 		display: block;
-	}	
+	}
 
 	#planned-executed-bubble-0 {
 		position: absolute;
@@ -226,7 +226,7 @@ ul.legend-0 li span {
 		height: 40px;
 		background: #ffcc33;
 		display: block;
-	}	
+	}
 
 	#planned-executed-bubble-1 {
 		position: absolute;
@@ -495,14 +495,14 @@ ul.legend-0 li span {
 		height: 40px;
 		background: #b6f7bf;
 		display: block;
-	}	
+	}
 
 	#planned-executed-bubble-2 {
 		display: none;
 	}
 
 	#planned-executed-bubble-2:before {
-		display: none;	
+		display: none;
 	}
 
 /* Styling for bar 3 (ultra-simplified)*/
@@ -562,7 +562,7 @@ ul.legend-0 li span {
 		height: 15px;
 		background: #cecece;
 		display: block;
-	}	
+	}
 
 	#planned-executed-bubble-3 {
 		position: absolute;
@@ -759,7 +759,7 @@ ul.legend-0 li span {
 }
 
 #sc-barchart-1 .barchart-barblock-3 .barchart-bar {
-	border: 2px solid #fba242;	
+	border: 2px solid #fba242;
 	background: url(budget/city.png) no-repeat;
 	background-position: center bottom;
 }
@@ -767,36 +767,36 @@ ul.legend-0 li span {
 #sc-barchart-1 .barchart-barblock-4 .barchart-bar {
 	border: 2px solid #ffd647;
 	background: url(budget/palms.png) no-repeat;
-	background-position: center bottom;	
+	background-position: center bottom;
 }
 
 
 #sc-barchart-1 .barchart-barblock-5 .barchart-bar {
 	border: 2px solid #ffe17a;
 	background: url(budget/case.png) no-repeat;
-	background-position: center bottom;	
+	background-position: center bottom;
 }
 
 #sc-barchart-1 .barchart-barblock-6 .barchart-bar {
 	border: 2px solid #fff47c;
 	background: url(budget/book.png) no-repeat;
-	background-position: center bottom;	
+	background-position: center bottom;
 }
 
 #sc-barchart-1 .barchart-barblock-7 .barchart-bar {
 	border: 2px solid #f1d659;
 	background: url(budget/tap.png) no-repeat;
-	background-position: center bottom;	
+	background-position: center bottom;
 }
 
 #sc-barchart-1 .barchart-barblock-8 .barchart-bar {
 	border: 2px solid #d4af60;
 	background: url(budget/car.png) no-repeat;
-	background-position: center bottom;	
+	background-position: center bottom;
 }
 
 #sc-barchart-1 .barchart-barblock-9 .barchart-bar {
 	border: 2px solid #d47e60;
 	background: url(budget/dots.png) no-repeat;
-	background-position: center bottom;	
+	background-position: center bottom;
 }

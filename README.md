@@ -1,15 +1,15 @@
 ## Description
 
-Sexycharts is a JavaScript extension for Google Charts. For now, it contains four kinds of charts: 
+Sexycharts is a JavaScript extension for Google Charts. For now, it contains four kinds of charts:
 
-- Pie-chart
+- Donut-chart
 - Horizontal bar-chart
 - Vertical bar-chart
 - List of things with percantage
 
-## Usage 
-First thing you need to do use this charts is to setup all dependancies. There are 
-- jQuery 
+## Usage
+First thing you need to do use this charts is to setup all dependancies. There are
+- jQuery
 - Raphael.js
 - Google Charts
 
@@ -22,8 +22,8 @@ All this files are in repository. So basicaly you need to add following lines to
     <script src="sexychart.js"></script>
 ```
 Next, you need to create some container for your chart. Let's create chart for our development cycle. Then add following div to html:
-```html 
-	<div id="development-cycle" style="width: 300px; height: 300px; margin-left: 35px;"></div>
+```html
+	<div id="development-cycle" style="width: 300px; height: 300px;"></div>
 ```
 And setup Google charts by adding following JavaScript code.:
 ```html
@@ -33,7 +33,7 @@ And setup Google charts by adding following JavaScript code.:
       google.setOnLoadCallback(drawChart);
 
       function drawChart() {
-		// Now we will write all our code here 
+		// Now we will write all our code here
       }
 
     </script>
@@ -43,7 +43,7 @@ Now lets add some data and draw our chart.
 function drawChart() {
   // Create storage for our data
   var data = new google.visualization.DataTable();
-  
+
   // Add data
   data.addColumn('string', 'Label');
   data.addColumn('number', 'Value');
@@ -54,13 +54,13 @@ function drawChart() {
     ['Thinking about stuff', 1.3, '#00E397'],
     ['Coding', 20.3, '#71C499'],
   ]);
-  
+
   // Set options for chart
   var options = {measure: "Hours",
                  textAttr: {'font-size': 40,
                             'font-family':'Verdana, Verdana, sans-serif',
                             'fill': '#ADD7B8'}}; // font color
-  
+
   // Draw chart
   chart = new sexychart.PieChart(document.getElementById('development-cycle'));
   chart.draw(data, options);
@@ -72,9 +72,9 @@ Here is what we have now:
 Awesome, isn't it? Saddly, we don't see any labels. That's why we have a `sexychart.Legend` for it!
 So lets add it to our chart. This is quite simple.
 
-We add container to html. 
-```html 
-	<div id="development-legend" style="width: 600px; height: 80px;"></div>
+We add container to html.
+```html
+	<div id="development-legend" style="width: 300px;"></div>
 ```
 And add following js to the end of our `drawChart()` function:
 ```javascript

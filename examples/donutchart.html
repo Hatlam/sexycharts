@@ -1,15 +1,19 @@
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="index.css"/>
+    <link rel="stylesheet" type="text/css" href="../sexychart.css"/>
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
-    <script src="jquery.js"></script>
-    <script src="raphael.js"></script>
-    <script src="sexychart.js"></script>
+
+    <script src="../vendor/jquery.js"></script>
+    <script src="../vendor/raphael.js"></script>
+
+    <script src="../sexychart.js"></script>
   </head>
 
   <body>
-    <div id="development" style="width: 300px; height: 300px; margin-left: 35px;"></div>
-    <div id="legend" style="width: 600px; height: 80px;"></div>
+    <div style="margin: 0 auto;">
+      <div id="development" style="width: 300px; height: 300px; margin: 0 auto;"></div>
+      <div id="legend" style="width: 300px; margin: 0 auto;"></div>
+    </div>
 
     <script type="text/javascript">
       google.load("visualization", "1", {packages: ['table']});
