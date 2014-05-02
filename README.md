@@ -6,6 +6,8 @@ Sexycharts is a JavaScript extension for Google Charts. For now, it contains fou
 - Horizontal bar-chart
 - Vertical bar-chart
 - List of things with percantage
+ 
+[See Sexycharts in action!](http://hatlam.github.io/sexycharts/)
 
 ## Usage
 First thing you need to do use this charts is to setup all dependancies. There are
@@ -95,7 +97,7 @@ And add following js to the end of our `drawChart()` function:
     chart.setHover(legend.getHover());
   });
 ```
-Here is the final result:
+Here is the [final result](http://hatlam.github.io/sexycharts/examples/donutchart.html):
 
 ![alt text](https://github.com/Hatlam/sexycharts/blob/master/images/legend.png?raw=true Final Result)
 
