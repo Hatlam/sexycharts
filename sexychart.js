@@ -7,16 +7,16 @@ var sexychart = {};
 /************************************************************
     PieChart visualisation
 
-    Data format 
+    Data format
         First column string (label)
         Second column number (value)
         Third column string (color)
 
-    Methods 
+    Methods
         getHover
         setHover
 
-    Events 
+    Events
         hover
 *************************************************************/
 
@@ -30,7 +30,7 @@ sexychart.DIV_TO_SHADOW = 1/18;
 sexychart.DIV_TO_TXT = 1/9;
 sexychart.DIV_TO_TXTM = 1/16;
 
-// PieChart constructor 
+// PieChart constructor
 sexychart.PieChart = function (container) {
     // Stores comtainer HTML element
     this.containerElement = container;
@@ -59,19 +59,19 @@ function sectorPath(x, y, r1, r2, startAngle, endAngle) {
     var y22 = y - r2 * Math.cos(endAngle);
 
     var big = 0;
-    if (endAngle - startAngle > Math.PI) 
+    if (endAngle - startAngle > Math.PI)
         big = 1;
 
     var pathList = ["M", x12, y12,
                     "A", r2, r2, 0, big, 1, x22, y22,
-                    "L", x21, y21, 
+                    "L", x21, y21,
                     "A", r1, r1, 0, big, 0, x11, y11,
                     "Z"];
 
     return pathList;
 }
 
-// PieChart.draw() method 
+// PieChart.draw() method
 sexychart.PieChart.prototype.draw = function (data, options) {
 
     var self = this;
@@ -85,14 +85,14 @@ sexychart.PieChart.prototype.draw = function (data, options) {
         var endAngles = [];
         var total = 0;
         var placeholder = this.canvas.parentNode.id;
-        
+
         self.totalValue = 0;
         for (var i = 0; i < data.length; i++) {
             self.totalValue += data[i];
             startAngles.push(0);
             endAngles.push(0);
         };
-        
+
         var startAngle = 0;
         total = self.totalValue;
 
@@ -103,31 +103,31 @@ sexychart.PieChart.prototype.draw = function (data, options) {
 
         for (var i = 0; i < data.length; i++) {
             var deltaAngle = data[i] / total * Math.PI * 2 * 0.000001;
-            self.paths.push(paper.path().attr( 
-                        {sector : [x, y, r1, r2, startAngle, startAngle + deltaAngle], 
-                        fill: colors[i], stroke: colors[i], 
+            self.paths.push(paper.path().attr(
+                        {sector : [x, y, r1, r2, startAngle, startAngle + deltaAngle],
+                        fill: colors[i], stroke: colors[i],
                         "stroke-width": 0}));
             startAngle += deltaAngle;
         };
 
         function redrawWithAnimation(ms) {
 
-            // Adding shadows 
-            var startAngle = 0;
-            var deltaAngle = 0;
-            for (var i = 0; i < data.length; i++) {
-                var deltaAngle = data[i] / (total * 1.00001) * Math.PI * 2;
-                var p = self.paths[i];
-                var dStroke = (r2 - r1) * 0.22;
-                var dAngle = (deltaAngle < Math.PI - 0.01) ? 0.04 : 0;
-                var shadow = paper.path(sectorPath(x, y, r1 - dStroke, r2 + dStroke, 
-                                                startAngle - dAngle, startAngle + deltaAngle + dAngle));
-                shadow.hide();
-                p.shadow = shadow.glow({width: (r2 - r1) / 6, color: 'black', opacity: 0.001});
-                startAngles[i] = startAngle;
-                startAngle += deltaAngle;
-                endAngles[i] = startAngle;
-            };
+            // // Adding shadows
+            // var startAngle = 0;
+            // var deltaAngle = 0;
+            // for (var i = 0; i < data.length; i++) {
+            //     var deltaAngle = data[i] / (total * 1.00001) * Math.PI * 2;
+            //     var p = self.paths[i];
+            //     var dStroke = (r2 - r1) * 0.22;
+            //     var dAngle = (deltaAngle < Math.PI - 0.01) ? 0.04 : 0;
+            //     // var shadow = paper.path(sectorPath(x, y, r1 - dStroke, r2 + dStroke,
+            //     //                                 startAngle - dAngle, startAngle + deltaAngle + dAngle));
+            //     // shadow.hide();
+            //     // p.shadow = shadow.glow({width: (r2 - r1) / 6, color: 'black', opacity: 0.001});
+            //     startAngles[i] = startAngle;
+            //     startAngle += deltaAngle;
+            //     endAngles[i] = startAngle;
+            // };
 
             // Animating
             startAngle = 0;
@@ -139,7 +139,7 @@ sexychart.PieChart.prototype.draw = function (data, options) {
                 p.formatedValue = data[i];
                 p.animate({sector : [x, y, r1, r2, startAngle, startAngle + deltaAngle]}, ms, "bounce", function() {
                     setAnimation(100);
-                    self.hasBeenAnimated = true;      
+                    self.hasBeenAnimated = true;
                 });
                 startAngles[i] = startAngle;
                 startAngle += deltaAngle;
@@ -152,7 +152,7 @@ sexychart.PieChart.prototype.draw = function (data, options) {
             self.textColor = options.textColor;
         }
 
-        textAttributes = {'font-size': self.min * sexychart.DIV_TO_TXT, 
+        textAttributes = {'font-size': self.min * sexychart.DIV_TO_TXT,
                                                 'font-family':'Verdana, Verdana, sans-serif',
                                                 'fill': self.textColor};
 
@@ -162,7 +162,7 @@ sexychart.PieChart.prototype.draw = function (data, options) {
 
         var textHeight = textAttributes["font-size"];
 
-        self.txt = paper.text(x, y - textHeight / 10, 
+        self.txt = paper.text(x, y - textHeight / 10,
                                 self.formatValue(total)).attr(textAttributes);
 
         if (options && "measure" in options) {
@@ -170,7 +170,7 @@ sexychart.PieChart.prototype.draw = function (data, options) {
             self.measure = paper.text(x, y + textHeight * 0.85, options.measure)
                                 .attr(textAttributes);
         }
-        
+
 
 
         var values = data;
@@ -217,7 +217,7 @@ sexychart.PieChart.prototype.draw = function (data, options) {
     }
     else {
         this.width = this.containerElement.offsetWidth;
-        this.height = this.containerElement.offsetWidth;   
+        this.height = this.containerElement.offsetWidth;
     }
 
     this.min = Math.min(this.width, this.height);
@@ -226,13 +226,13 @@ sexychart.PieChart.prototype.draw = function (data, options) {
         colors = [],
         values = [],
         formattedVals = [];
-    
+
 
     var amountOfColumns = data.getNumberOfColumns();
     var amountOfRows = data.getNumberOfRows();
 
-    if (amountOfColumns  >= 3 
-        && data.getColumnType(0) == 'string' 
+    if (amountOfColumns  >= 3
+        && data.getColumnType(0) == 'string'
         && data.getColumnType(1) == 'number'
         && data.getColumnType(2) == 'string')
     {
@@ -240,7 +240,7 @@ sexychart.PieChart.prototype.draw = function (data, options) {
             values.push(data.getValue(rowIndex, 1));
             formattedVals.push(data.getFormattedValue(rowIndex, 1));
             colors.push(data.getValue(rowIndex, 2));
-            
+
         }
     }
     else {
@@ -248,14 +248,14 @@ sexychart.PieChart.prototype.draw = function (data, options) {
         console.log('Wrong table format!');
     }
 
-    r.donutChart(this.width / 2, this.height / 2, 
+    r.donutChart(this.width / 2, this.height / 2,
                 this.min * sexychart.DIV_TO_R1,
                 this.min * sexychart.DIV_TO_R2, values, colors);
 
    for (var i = 0; i < this.paths.length; ++i) {
         this.paths[i].value = values[i];
         this.paths[i].formattedValue = formattedVals[i];
-   } 
+   }
 }
 
 sexychart.PieChart.prototype.getHover = function () {
@@ -274,19 +274,19 @@ sexychart.PieChart.prototype.setHover = function (coords) {
         if (i == r && !this.paths[i].isSelected) {
             curPath.isSelected = true;
             curPath.stop().animate({"stroke-width": this.min * sexychart.DIV_TO_STROKE}, 100);
-            curPath.shadow.stop().animate({opacity: 0.02}, 100);
-            curPath.shadow.toFront();
+            // curPath.shadow.stop().animate({opacity: 0.02}, 100);
+            // curPath.shadow.toFront();
             curPath.toFront();
             this.txt.attr({"text": this.formatValue(curPath.value)});
         }
         else if (i != r && this.paths[i].isSelected) {
             curPath.isSelected = false;
             curPath.stop().animate({"stroke-width": 0}, 100);
-            curPath.shadow.stop().animate({opacity: 0.001}, 100);
-            curPath.shadow.toBack();
+            // curPath.shadow.stop().animate({opacity: 0.001}, 100);
+            // curPath.shadow.toBack();
             this.puttAllSectorsToFront();
             curPath.toFront();
-            this.txt.attr({"text": this.formatValue(this.totalValue)});   
+            this.txt.attr({"text": this.formatValue(this.totalValue)});
         }
     };
 }
@@ -305,12 +305,12 @@ sexychart.PieChart.prototype.formatValue = function (number) {
 /************************************************************
     Legend visualisation
 
-    Data format 
+    Data format
         First column string (label)
         Second column number (value)
         Third column string (color)
 
-    Methods 
+    Methods
         getHover
         setHover
 
@@ -321,7 +321,7 @@ sexychart.PieChart.prototype.formatValue = function (number) {
 // Global constant to prevent collisions of different legends
 sexychart.nextLegendId = 0;
 
-// Legend constructor 
+// Legend constructor
 sexychart.Legend = function (container) {
     // Stores comtainer HTML element
     this.containerElement = container;
@@ -347,7 +347,7 @@ sexychart.Legend.prototype.getBarById = function (id) {
     };
 }
 
-// Legend.draw() method 
+// Legend.draw() method
 sexychart.Legend.prototype.draw = function (data, options) {
     // Add error processing
 
@@ -357,8 +357,8 @@ sexychart.Legend.prototype.draw = function (data, options) {
     var amountOfRows = data.getNumberOfRows();
     var bars = this.bars;
 
-    if (amountOfColumns  >= 3 
-        && data.getColumnType(0) == 'string' 
+    if (amountOfColumns  >= 3
+        && data.getColumnType(0) == 'string'
         && data.getColumnType(1) == 'number'
         && data.getColumnType(2) == 'string')
     {
@@ -371,7 +371,7 @@ sexychart.Legend.prototype.draw = function (data, options) {
 
         // Setting up bar array
         for (var rowIndex = 0; rowIndex < amountOfRows; ++rowIndex) {
-            bars.push({label: data.getValue(rowIndex, 0), 
+            bars.push({label: data.getValue(rowIndex, 0),
                        value: data.getValue(rowIndex, 1),
                        color: data.getValue(rowIndex, 2),
                        index: rowIndex,
@@ -407,7 +407,7 @@ sexychart.Legend.prototype.draw = function (data, options) {
         var b = document.getElementById(bar.domId);
         b.style.cursor = 'pointer';
         var self = this;
-    
+
         $(b).hover( function () {
             self.setHover([{row:self.getBarById($(this).attr('id')).index, col:0}]);
             google.visualization.events.trigger(self, 'hover', {});
@@ -415,7 +415,7 @@ sexychart.Legend.prototype.draw = function (data, options) {
             self.setHover([{row:null, col:null}]);
             google.visualization.events.trigger(self, 'hover', {});
         });
-    }  
+    }
 }
 
 sexychart.Legend.prototype.getHover = function() {
@@ -439,7 +439,7 @@ sexychart.Legend.prototype.setHover = function (coords) {
             if (rowInd != null && bar.index == rowInd) {
                 className += '-hover';
                 break;
-            }  
+            }
         }
 
         var td = document.getElementById(bar.domId);
@@ -452,22 +452,22 @@ sexychart.Legend.prototype.setHover = function (coords) {
 /************************************************************
     Planned and Executed graph visualisation
 
-    Data format 
+    Data format
         +----------------------------+----------------+
         |   label_executed (string)  | value (number) |
         +----------------------------+----------------+
         |   label_planned (string)   | value (number) |
         +----------------------------+----------------+
-    Methods 
+    Methods
 
-    Events 
-        
+    Events
+
 *************************************************************/
 
 // Global constant to prevent collisions of different legends
 sexychart.nextPlannedAndExecutedId = 0;
- 
-// Constructor 
+
+// Constructor
 sexychart.PlannedAndExecuted = function (container) {
     this.containerElement = container;
     this.uid = sexychart.nextPlannedAndExecutedId++;
@@ -481,8 +481,8 @@ sexychart.PlannedAndExecuted.prototype.animateCounter = function(elem, from, to,
         easing: 'easeOutQuad',
         duration: duration,
         step: function() {
-            elem.text(prefix 
-                + (Math.round(this.count * afterComma) / afterComma).toLocaleString() 
+            elem.text(prefix
+                + (Math.round(this.count * afterComma) / afterComma).toLocaleString()
                 + postfix);
         },
         complete: function () {
@@ -491,15 +491,15 @@ sexychart.PlannedAndExecuted.prototype.animateCounter = function(elem, from, to,
     });
 }
 
-// Draw method 
+// Draw method
 sexychart.PlannedAndExecuted.prototype.draw = function (data, options) {
     // Set up html skeleton
     var html = [];
     var amountOfColumns = data.getNumberOfColumns();
     var amountOfRows = data.getNumberOfRows();
 
-    if (amountOfColumns  >= 2 
-        && data.getColumnType(0) == 'string' 
+    if (amountOfColumns  >= 2
+        && data.getColumnType(0) == 'string'
         && data.getColumnType(1) == 'number'
         && amountOfRows >= 2)
     {
@@ -522,8 +522,8 @@ sexychart.PlannedAndExecuted.prototype.draw = function (data, options) {
 
 
         //Executed
-        html.push('<div id="executed-' + this.uid + '">' 
-                    + '<p>' + this.executed.label + '</p>' 
+        html.push('<div id="executed-' + this.uid + '">'
+                    + '<p>' + this.executed.label + '</p>'
                     + '<span>' + this.executed.value + '</span>'
                     + measure
                 + '</div>');
@@ -531,16 +531,16 @@ sexychart.PlannedAndExecuted.prototype.draw = function (data, options) {
         // Pointer
         html.push('<div id="planned-executed-bubble-' + this.uid + '">' + percents + '%</div>');
 
-        // Bar 
+        // Bar
         html.push('<div id="planned-bar-' + this.uid + '"> </div>');
 
-        // Bar 
+        // Bar
         html.push('<div id="executed-bar-' + this.uid + '"> </div>');
 
         // Planned
-        html.push('<div id="planned-' + this.uid + '">' 
-                    + '<p>' + this.planned.label + '</p>' 
-                    + '<span>' + this.planned.value.toLocaleString() + '</span>' 
+        html.push('<div id="planned-' + this.uid + '">'
+                    + '<p>' + this.planned.label + '</p>'
+                    + '<span>' + this.planned.value.toLocaleString() + '</span>'
                     + measure
                 + '</div>');
 
@@ -573,44 +573,44 @@ sexychart.PlannedAndExecuted.prototype.draw = function (data, options) {
         bubble.offset({left: bubbleLeft});
         bubble.animate({marginLeft: plannedWidth}, 1000, 'easeOutQuad');
         self.animateCounter(bubble, 0, percents, '', '%', 0, 1000);
-        self.animateCounter(executedSpan, 0, self.executed.value, '', '', 1, 1000);    
+        self.animateCounter(executedSpan, 0, self.executed.value, '', '', 1, 1000);
     }
 
     if (isScrolledIntoView(pbar) && animationAllowed) {
         animationAllowed = false;
-        animateBar();    
-    } 
+        animateBar();
+    }
 
-    
+
     $(document).scroll( function(){
         if (isScrolledIntoView(pbar) && animationAllowed) {
             animationAllowed = false;
-            animateBar();        
+            animateBar();
         }
     });
 }
 
 /************************************************************
     BarChart visualisation
-        
-    Data format 
+
+    Data format
         First column string (label)
         Second column number (value)
         ...
         N-th column number (value)
 
-    Methods 
+    Methods
 
-    Events 
+    Events
 
 *************************************************************/
 // Global constant to prevent collisions of different legends
 sexychart.nextBarChartId = 0;
 
-// Constants 
+// Constants
 sexychart.SCALE_SIZE = 5;
 
-// Constructor 
+// Constructor
 sexychart.BarChart = function (container) {
     this.containerElement = container;
     this.uid = sexychart.nextBarChartId++;
@@ -653,7 +653,7 @@ sexychart.BarChart.prototype.extractData = function (data) {
             else {
                 var currentValue = data.getValue(rowIndex, colIndex);
                 this.barBlocks[rowIndex].values.push(currentValue);
-                if (currentValue < this.minValue) 
+                if (currentValue < this.minValue)
                     this.minValue = currentValue;
 
                 if (currentValue > this.maxValue)
@@ -693,7 +693,7 @@ sexychart.BarChart.prototype.getHtml = function (options) {
         html.push('</div>');
     }
 
-    // Push info bubble 
+    // Push info bubble
     html.push('<div id="barchart-info-{0}"></div>'.format(this.uid));
 
     html.push('</div>');
@@ -740,7 +740,7 @@ sexychart.BarChart.prototype.setUpPositions = function (options) {
     }
     else {
         $container.height(this.containerElement.offsetHeight);
-        $container.width(this.containerElement.offsetWidth);  
+        $container.width(this.containerElement.offsetWidth);
     }
 
     var scaleTextWidth = 40,
@@ -752,15 +752,15 @@ sexychart.BarChart.prototype.setUpPositions = function (options) {
         scaleDivHeight = gridHeight / scaleSize,
         chartHeight = scaleDivHeight * (scaleSize - 1);
 
-    // Set scale labels and measure 
+    // Set scale labels and measure
     $scaleLabels.each( function () {
         $(this).width(scaleTextWidth);
     });
     $measure.each( function() {
-        $(this).width(scaleTextWidth); 
+        $(this).width(scaleTextWidth);
     })
 
-    // Set scale divs 
+    // Set scale divs
     $scale.each( function () {
         $(this).width(gridWidth);
         $(this).height(scaleDivHeight);
@@ -776,25 +776,25 @@ sexychart.BarChart.prototype.setUpPositions = function (options) {
         $(this).width(blockWidth / 2);
         if (i == 0)
             $(this).css({'margin-left': scaleTextWidth + blockWidth * 0.4 + 10});
-        else     
+        else
             $(this).css({'margin-left': blockWidth / 2});
 
         var animationAllowed = false;
         $(this).hover( function () {
             var $info = $('#barchart-info-' + _this.uid);
             $info.css(
-                { bottom: $info.height() + _this.barBlocks[i].height, 
+                { bottom: $info.height() + _this.barBlocks[i].height,
                 display: 'block'});
 
             $(this).append($info);
 
             if ('bubble-contents' in options) {
-                $info.html(options['bubble-contents'](i));    
+                $info.html(options['bubble-contents'](i));
             }
             else {
-                $info.html('');    
+                $info.html('');
             }
-            
+
             $info.stop(true, true).animate({opacity: 1});
         }, function () {
             var $info = $('#barchart-info-' + _this.uid);
@@ -849,10 +849,10 @@ sexychart.BarChart.prototype.animateBars = function (options) {
     });
 }
 
-// Draw method 
+// Draw method
 sexychart.BarChart.prototype.draw = function (data, options) {
     if (this.isDataValid(data))
-    {   
+    {
         this.extractData(data);
         this.containerElement.innerHTML = this.getHtml(options);
         this.setUpPositions(options);
@@ -881,7 +881,7 @@ function isScrolledIntoView(elem)
 if (!String.prototype.format) {
   String.prototype.format = function() {
     var args = arguments;
-    return this.replace(/{(\d+)}/g, function(match, number) { 
+    return this.replace(/{(\d+)}/g, function(match, number) {
       return typeof args[number] != 'undefined'
         ? args[number]
         : match

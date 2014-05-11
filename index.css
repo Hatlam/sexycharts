@@ -1,0 +1,194 @@
+body, html {
+  padding: 0;
+  margin: 0;
+}
+
+h3 {
+  font-size: 20px;
+  font-weight: 200;
+  color: #a85b23;
+}
+
+h2 {
+  font-size: 28px;
+  font-weight: 200;
+  color: black;
+  text-align: center;
+}
+
+/***
+ * Header
+ ***/
+.header {
+  position: relative;
+  width: 100%;
+  height: 80%;
+  min-height: 500px;
+  background-color: #f3e6d6;
+}
+
+.center-screen {
+  position: absolute;
+  width: 960px;
+  height: 500px;
+  margin-left: -480px;
+  margin-top: -230px;
+  top: 50%;
+  left: 50%;
+}
+
+
+.logo {
+  background: url(images/logo.png) no-repeat;
+  width: 360px;
+  height: 129px;
+  float: left;
+  margin-top: 50px;
+}
+
+.girl {
+  background: url(images/girl.png) no-repeat;
+  width: 216px;
+  height: 443px;
+  float: left;
+}
+
+.text-block {
+  position: absolute;
+  font-size: 22px;
+  width: 500px;
+  right: 20px;
+  bottom: 140px;
+  color: #4a2b08;
+}
+
+  .text-block .btn {
+    display: inline-block;
+    width: 200px;
+    height: 50px;
+    font-size: 16px;
+    text-align: center;
+    line-height: 50px;
+    vertical-align: middle;
+    border-radius: 3px;
+    margin-top: 20px;
+    margin-right: 20px;
+    text-decoration: none;
+    color: #4a2b08;
+  }
+
+  .text-block a.btn.documentation {
+    background-color: #dfc2a1;
+  }
+
+  .text-block a.btn.download {
+    background-color: #c37c5e;
+  }
+
+/***
+ * Advantages
+ ***/
+.advantages {
+  position: relative;
+  width: 960px;
+  left: 50%;
+  margin-left: -480px;
+}
+
+  .advantages:after {
+    content: " ";
+    display: block;
+    clear: both;
+    margin-bottom: 50px;
+  }
+
+  .advantages .row {
+    display: inline-block;
+    float: left;
+    width: 33.3%;
+    text-align: center;
+  }
+
+  .advantages .row img {
+    display: block;
+    position: relative;
+    border-radius: 1000px;
+    width: 200px;
+    margin: 40px auto;
+    margin-bottom: 0px;
+  }
+
+  .advantages .row .description {
+    padding: 0 40px;
+    font-size: 16px;
+    color: #a88c7e;
+  }
+
+  .advantages .girl-in-circle {
+    width: 200px;
+    height: 200px;
+    background-size: cover;
+    background-color: gray;
+    margin: 0 auto;
+    margin-top: 30px;
+    -webkit-border-radius: 100px;
+            border-radius: 100px;
+
+  }
+
+.girl-in-circle.g1 { background-image: url(images/b1.jpg); }
+.girl-in-circle.g2 { background-image: url(images/b2.jpg); }
+.girl-in-circle.g3 { background-image: url(images/b3.jpg); }
+
+/***
+ * Main content
+ ***/
+.main-content {
+  position: relative;
+  width: 960px;
+  height: 500px;
+  left: 50%;
+  margin-left: -480px;
+}
+
+  .main-content .hairline {
+    height: 1px;
+    width: 800px;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    background-color: #ECD7CD;
+  }
+
+/***
+ * Charts
+ ***/
+.chart-with-legend {
+  width: 700px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+#table {
+  margin-top: 50px;
+}
+
+#donut-chart, #table {
+  float: left;
+}
+
+.income-and-outcome {
+  width: 800px;
+  margin: 0 auto;
+}
+
+#barchart,
+#incomesimple,
+#donediv,
+#bcpdiv {
+  margin: 0 auto;
+}
+
+#barchart {
+  margin-top: 60px;
+}
