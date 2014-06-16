@@ -738,65 +738,113 @@ ul.legend-0 li span {
 #sc-barchart-1 .barchart-barblock .barchart-bar {
 	border-radius: 6px;
 	background: white;
+	overflow: visible;
 }
+
+#sc-barchart-1 .barchart-bar {
+	overflow: visible!important;
+}
+
+	#sc-barchart-1 .barchart-bar:after {
+		content: " ";
+		position: absolute;
+		display: block;
+		width: 42px;
+		height: 42px;
+		top: -44px;
+		z-index: 1000;
+		background-position: center bottom;
+		background-repeat: no-repeat;
+	}
 
 #sc-barchart-1 .barchart-barblock-0 .barchart-bar {
 	border: 2px solid #d46854;
-	background: url(budget/shield.png) no-repeat;
+	background: rgba(212, 104, 84, 0.1);
 	background-position: center bottom;
 }
+
+	#sc-barchart-1 .barchart-barblock-0 .barchart-bar:after {
+		background-image: url(budget/shield.png);
+	}
 
 #sc-barchart-1 .barchart-barblock-1 .barchart-bar {
+	background: rgba(255, 119, 52, 0.1);
 	border: 2px solid #ff7734;
-	background: url(budget/pot.png) no-repeat;
-	background-position: center bottom;
 }
+
+	#sc-barchart-1 .barchart-barblock-1 .barchart-bar:after {
+		background-image: url(budget/pot.png);
+	}
 
 #sc-barchart-1 .barchart-barblock-2 .barchart-bar {
+	background: rgba(233, 144, 49, 0.1);
 	border: 2px solid #e99031;
-	background: url(budget/heart.png) no-repeat;
-	background-position: center bottom;
 }
+
+	#sc-barchart-1 .barchart-barblock-2 .barchart-bar:after {
+		background-image: url(budget/heart.png);
+	}
 
 #sc-barchart-1 .barchart-barblock-3 .barchart-bar {
+	background: rgba(253, 177, 83, 0.1);
 	border: 2px solid #fba242;
-	background: url(budget/city.png) no-repeat;
-	background-position: center bottom;
 }
 
+	#sc-barchart-1 .barchart-barblock-3 .barchart-bar:after {
+		background-image: url(budget/city.png);
+	}
+
 #sc-barchart-1 .barchart-barblock-4 .barchart-bar {
+	background: rgba(255, 220, 88, 0.1);
 	border: 2px solid #ffd647;
-	background: url(budget/palms.png) no-repeat;
-	background-position: center bottom;
 }
+
+	#sc-barchart-1 .barchart-barblock-4 .barchart-bar:after {
+		background-image: url(budget/palms.png);
+	}
 
 
 #sc-barchart-1 .barchart-barblock-5 .barchart-bar {
+	background: rgba(255, 229, 140, 0.1);
 	border: 2px solid #ffe17a;
-	background: url(budget/case.png) no-repeat;
-	background-position: center bottom;
 }
+
+	#sc-barchart-1 .barchart-barblock-5 .barchart-bar:after {
+		background-image: url(budget/case.png);
+	}
 
 #sc-barchart-1 .barchart-barblock-6 .barchart-bar {
+	background: rgba(255, 244, 142, 0.1);
 	border: 2px solid #fff47c;
-	background: url(budget/book.png) no-repeat;
-	background-position: center bottom;
 }
+
+	#sc-barchart-1 .barchart-barblock-6 .barchart-bar:after {
+		background-image: url(budget/book.png);
+	}
 
 #sc-barchart-1 .barchart-barblock-7 .barchart-bar {
+	background: rgba(244, 220, 107, 0.1);
 	border: 2px solid #f1d659;
-	background: url(budget/tap.png) no-repeat;
-	background-position: center bottom;
 }
+
+	#sc-barchart-1 .barchart-barblock-7 .barchart-bar:after {
+		background-image: url(budget/tap.png);
+	}
 
 #sc-barchart-1 .barchart-barblock-8 .barchart-bar {
+	background: rgba(221, 188, 115, 0.1);
 	border: 2px solid #d4af60;
-	background: url(budget/car.png) no-repeat;
-	background-position: center bottom;
 }
 
+	#sc-barchart-1 .barchart-barblock-8 .barchart-bar:after {
+		background-image: url(budget/car.png);
+	}
+
 #sc-barchart-1 .barchart-barblock-9 .barchart-bar {
+	background: rgba(222, 146, 115, 0.1);
 	border: 2px solid #d47e60;
-	background: url(budget/dots.png) no-repeat;
-	background-position: center bottom;
 }
+
+	#sc-barchart-1 .barchart-barblock-9 .barchart-bar:after {
+		background-image: url(budget/dots.png);
+	}

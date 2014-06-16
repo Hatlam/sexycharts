@@ -1,36 +1,69 @@
 <html>
   <head>
+    <link rel="stylesheet" type="text/css" href="index.css"/>
     <link rel="stylesheet" type="text/css" href="sexychart.css"/>
     <link rel="stylesheet" type="text/css" href="index.css"/>
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
     <script src="vendor/jquery.js"></script>
     <script src="vendor/raphael.js"></script>
     <script src="sexychart.js"></script>
+    <title></title>
   </head>
   <body>
+    <a href="https://github.com/Hatlam/sexycharts"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 100;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
 
     <div class="header">
         <div class="center-screen">
             <div class="girl"></div>
             <div class="logo"></div>
             <div class="text-block">
-                <div class="description">Easy, object oriented client side graphs for designers and developers</div>
-                <a class="btn documentation" href="#">Documentation</a>
-                <a class="btn download" href="#">Download</a>
+                <div class="description">The sexiest way to visualize your data.  </div>
+                <a class="btn documentation" href="https://github.com/Hatlam/sexycharts/blob/master/README.md">Documentation</a>
+                <a class="btn download" href="https://github.com/Hatlam/sexycharts">Download</a>
             </div>
         </div>
-        <!-- <div class="hint-scroll">Scroll down</div> -->
     </div>
 
-    <div id="chartdiv" style="width: 300px; height: 300px;"></div>
-    <div id="table" style="width: 600px; height: 80px;"></div>
-    <div id="table1" style="width: 300px; height: 200px;"></div>
-    <div id="income"style="width: 300px; height: 100px;"></div>
-    <div id="outcome"style="width: 300px; height: 100px;"></div>
-    <div id="barchart"></div>
-    <div id="incomesimple" style="width: 600px; height: 100px;"></div>
-    <div id="donediv" style="width: 600px; height: 200px;"></div>
-    <div id="bcpdiv" style="width: 600px; height: 400px;"></div>
+    <div class="advantages">
+        <div class="row">
+            <div class="girl-in-circle g1"></div>
+            <h3> SVG and HTML based</h3>
+        </div>
+        <div class="row">
+            <div class="girl-in-circle g2"></div>
+            <h3> Integration with</br>Google Charts</h3>
+        </div>
+        <div class="row">
+            <div class="girl-in-circle g3"></div>
+            <h3> It's really sexy</h3>
+        </div>
+    </div>
+
+    <div class="main-content">
+
+        <div class="hairline"></div>
+        <div class="chart-with-legend">
+            <h2> Donut charts </h2>
+            <div id="donut-chart" style="width: 300px; height: 300px;"></div>
+            <div id="table" style="width: 340px; height: 200px;"></div>
+        </div>
+
+
+        <div class="hairline"></div>
+        <div class="income-and-outcome">
+            <h2> Progress bars </h2>
+            <div id="income"style="width: 300px; height: 100px;"></div>
+            <div id="outcome"style="width: 300px; height: 100px;"></div>
+        </div>
+
+        <div class="hairline"></div>
+        <h2> Comparison histogram </h2>
+        <div id="barchart"></div>
+
+        <div class="hairline"></div>
+        <h2> Bar charts</h2>
+        <div id="bcpdiv" style="height: 400px;"></div>
+    </div>
 
     <script type="text/javascript">
       google.load("visualization", "1", {packages: ['table']});
@@ -63,7 +96,7 @@
                                                 'font-family':'Verdana, Verdana, sans-serif',
                                                 'fill': '#ADD7B8'}};
 
-        chart = new sexychart.PieChart(document.getElementById('chartdiv'));
+        chart = new sexychart.PieChart(document.getElementById('donut-chart'));
         chart.draw(data, options);
 
         var legend = new sexychart.Legend(document.getElementById('table'));
@@ -161,36 +194,30 @@
         /******************************
                 Income (simple)
         *******************************/
-        var inSimpData = new google.visualization.DataTable();
-        inSimpData.addColumn('string', 'Label');
-        inSimpData.addColumn('number', 'Value');
-        inSimpData.addRows([
-                ['executed', 1779.5],
-                ['planned', 4124.2]
-            ]);
+        // var inSimpData = new google.visualization.DataTable();
+        // inSimpData.addColumn('string', 'Label');
+        // inSimpData.addColumn('number', 'Value');
+        // inSimpData.addRows([
+        //         ['executed', 1779.5],
+        //         ['planned', 4124.2]
+        //     ]);
 
-        var inSimpOptions = {title: 'Income', measure: 'M USD'};
+        // var inSimpOptions = {title: 'Income', measure: 'M USD'};
 
-        var inSimpBar = new sexychart.PlannedAndExecuted(document.getElementById('incomesimple'));
-        inSimpBar.draw(inSimpData, inSimpOptions);
+        // var inSimpBar = new sexychart.PlannedAndExecuted(document.getElementById('incomesimple'));
+        // inSimpBar.draw(inSimpData, inSimpOptions);
 
         /******************************
                     Done bar
         *******************************/
+        // var doneData = new google.visualization.DataTable();
+        // doneData.addColumn('string', 'Label');
+        // doneData.addColumn('number', 'Value');
+        // doneData.addRows([
+        //         ['executed', 77],
+        //         ['planned', 160]
+        //     ]);
 
-        var doneData = new google.visualization.DataTable();
-        doneData.addColumn('string', 'Label');
-        doneData.addColumn('number', 'Value');
-        doneData.addRows([
-                ['executed', 77],
-                ['planned', 160]
-            ]);
-
-
-        var doneOptions = {title: '', measure: 'M USD'};
-
-        var doneBar = new sexychart.PlannedAndExecuted(document.getElementById('donediv'));
-        doneBar.draw(doneData, doneOptions);
 
         /******************************
             Bar chart with pictures
@@ -211,7 +238,25 @@
                 ['', 6000],
             ]);
 
-        var bcpOptions = { measure: 'M USD', from: 0, to: 9000, 'scale-size': 10, width: 950, height: 350};
+        var difference = function (i) {
+          var spent = bcData.getValue(i, 1),
+            totals = [4000, 7000, 8000, 4000, 6000, 4000, 7000, 7500, 6000, 6100],
+            titles = ["social sphere", "social sphere", "social sphere",
+                      "social sphere", "social sphere", "social sphere",
+                      "social sphere", "social sphere", "social sphere",
+                      "social sphere"],
+            html = ('<div class="inner-div">'
+                        + '<span class="title">{0}</span> </br>'
+                        + '<span class ="total"> {1} M $.</span>'
+                        + '<span class = "spent"> / {2} M $.</span>'
+                    + '<div>').format(titles[i],
+                                      totals[i].toLocaleString(),
+                                      spent.toLocaleString()
+                                      );
+          return html;
+        }
+
+        var bcpOptions = { measure: 'M USD', from: 0, to: 9000, 'scale-size': 10, width: 950, height: 350,'bubble-contents': difference};
 
         var bcpChart = new sexychart.BarChart(document.getElementById('bcpdiv'));
         bcpChart.draw(bcpData, bcpOptions);

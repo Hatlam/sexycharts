@@ -3,6 +3,22 @@ body, html {
   margin: 0;
 }
 
+h3 {
+  font-size: 20px;
+  font-weight: 200;
+  color: #a85b23;
+}
+
+h2 {
+  font-size: 28px;
+  font-weight: 200;
+  color: black;
+  text-align: center;
+}
+
+/***
+ * Header
+ ***/
 .header {
   position: relative;
   width: 100%;
@@ -19,7 +35,6 @@ body, html {
   margin-top: -230px;
   top: 50%;
   left: 50%;
-  /*border: 1px solid black;*/
 }
 
 .logo {
@@ -39,7 +54,7 @@ body, html {
 
 .text-block {
   position: absolute;
-  font-size: 24px;
+  font-size: 22px;
   width: 500px;
   right: 20px;
   bottom: 140px;
@@ -68,13 +83,110 @@ body, html {
   .text-block a.btn.download {
     background-color: #c37c5e;
   }
-
-.hint-scroll {
-  position: absolute;
-  display: block;
-  bottom: 20px;
+/***
+ * Advantages
+ ***/
+.advantages {
+  position: relative;
+  width: 960px;
   left: 50%;
-  -webkit-transform: translate(-50%);
-  color: #4a2b08;
-  font-size: 20px;
+  margin-left: -480px;
+}
+
+  .advantages:after {
+    content: " ";
+    display: block;
+    clear: both;
+    margin-bottom: 50px;
+  }
+
+  .advantages .row {
+    display: inline-block;
+    float: left;
+    width: 33.3%;
+    text-align: center;
+  }
+
+  .advantages .row img {
+    display: block;
+    position: relative;
+    border-radius: 1000px;
+    width: 200px;
+    margin: 40px auto;
+    margin-bottom: 0px;
+  }
+
+  .advantages .row .description {
+    padding: 0 40px;
+    font-size: 16px;
+    color: #a88c7e;
+  }
+
+  .advantages .girl-in-circle {
+    width: 200px;
+    height: 200px;
+    background-size: cover;
+    background-color: gray;
+    margin: 0 auto;
+    margin-top: 30px;
+    -webkit-border-radius: 100px;
+            border-radius: 100px;
+
+  }
+
+.girl-in-circle.g1 { background-image: url(images/b1.jpg); }
+.girl-in-circle.g2 { background-image: url(images/b2.jpg); }
+.girl-in-circle.g3 { background-image: url(images/b3.jpg); }
+
+/***
+ * Main content
+ ***/
+.main-content {
+  position: relative;
+  width: 960px;
+  height: 500px;
+  left: 50%;
+  margin-left: -480px;
+}
+
+  .main-content .hairline {
+    height: 1px;
+    width: 800px;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    background-color: #ECD7CD;
+  }
+
+/***
+ * Charts
+ ***/
+.chart-with-legend {
+  width: 700px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+#table {
+  margin-top: 50px;
+}
+
+#donut-chart, #table {
+  float: left;
+}
+
+.income-and-outcome {
+  width: 800px;
+  margin: 0 auto;
+}
+
+#barchart,
+#incomesimple,
+#donediv,
+#bcpdiv {
+  margin: 0 auto;
+}
+
+#barchart {
+  margin-top: 60px;
 }
